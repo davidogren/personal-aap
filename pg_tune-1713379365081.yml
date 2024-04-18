@@ -11,7 +11,7 @@
 # Created by loudwalrus
 
 - name: run insights to obtain latest diagnosis info
-  hosts: "auto.loudwalrus.com"
+  hosts: "auto"
   vars:
     insights_remediation: " 84c5be3d-0355-4f38-9411-93e4d1c68c91"
     insights_signature_exclude: "/hosts,/vars/insights_signature,/vars/insights_remediation"
