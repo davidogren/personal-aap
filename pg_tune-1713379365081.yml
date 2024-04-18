@@ -11,7 +11,7 @@
 # Created by loudwalrus
 
 - name: run insights to obtain latest diagnosis info
-  hosts: "auto"
+  hosts: "auto.loudwalrus.com"
   vars:
     insights_remediation: " 84c5be3d-0355-4f38-9411-93e4d1c68c91"
     insights_signature_exclude: "/hosts,/vars/insights_signature,/vars/insights_remediation"
@@ -50,7 +50,7 @@
 # Identifier: (advisor:tuned_profiles_postgresql|TUNED_PROFILES_POSTGRESQL,fix)
 # Version: 1795cd3f8d57dc0af578249bc310328bb63b7d86
 - name: Install required packages and set proper tuned profile
-  hosts: "auto"
+  hosts: "auto.loudwalrus.com"
   become: true
   vars:
     pydata: "{{ insights_report.details['tuned_profiles_postgresql|TUNED_PROFILES_POSTGRESQL'] | default('') }}"
