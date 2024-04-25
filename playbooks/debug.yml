@@ -1,4 +1,5 @@
 - name: Display all variables/facts known for a host
+  hosts: localhost
   debug:
     var: hostvars[inventory_hostname]
   tags: debug_info
