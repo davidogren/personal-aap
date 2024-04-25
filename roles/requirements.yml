@@ -1,0 +1,3 @@
+- name: rhsm
+  src: https://github.com/redhat-cop/infra-ansible/tree/main/roles/rhsm
+  version: v2.0.8
