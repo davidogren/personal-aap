@@ -1,6 +1,6 @@
 - hosts: servers
   roles:
-  - role: rhsm
+    - rhsm
   tasks:
   - name: 'Register system using Red Hat Subscription Manager'
     redhat_subscription:
