@@ -1,6 +1,7 @@
-- name: Display all variables/facts known for a host
+- name: Dump Variables
   hosts: localhost
-  ansible.builtin.debug:
-    var: hostvars[inventory_hostname]
-    verbosity: 4
-  tags: debug_info
+  
+  tasks:
+    ansible.builtin.debug:
+      var: hostvars[inventory_hostname]
+      verbosity: 4
