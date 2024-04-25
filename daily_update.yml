@@ -1,0 +1,9 @@
+- hosts: servers
+  roles:
+  - role: rhsm
+  tasks:
+  - name: 'Register system using Red Hat Subscription Manager'
+    redhat_subscription:
+      state: present
+      username: "{{ uid_username) }}"
+      password: "{{ uid_password }}"
