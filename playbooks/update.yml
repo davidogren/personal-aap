@@ -10,10 +10,10 @@
   - name: upgrade all packages
     ansible.builtin.dnf:
       name: "*"
-      become: true
       state: latest
       update_only: true
-      register: dnf_taskout
+    become: true  
+    register: dnf_taskout
 
   - name: check to see if we need a reboot
     command: needs-restarting -r
