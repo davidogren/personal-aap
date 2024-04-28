@@ -1,4 +1,4 @@
-- hosts: servers
+- hosts: all
   roles:
     - rhsm
   tasks:
@@ -7,3 +7,12 @@
       state: present
       username: "{{ uid_username) }}"
       password: "{{ uid_password }}"
+    become: true
+  - name: apply security updates
+    ansible.builtin.dnf:
+      name: "*"
+      state: latest
+      update_only: true
+      security: true
+    become: true  
+    register: dnf_taskout
