@@ -1,7 +1,7 @@
 # Experimenting with simple update playbooks
 
 - name: Install on controller only
-  hosts: all
+  hosts: ansiblehosts
   vars:
     run: false
     reboot: false
