@@ -1,7 +1,7 @@
 # Experimenting with simple update playbooks
 
 - name: Install on controller only
-  hosts: auto.loudlwalrus.com
+  hosts: "auto.loudlwalrus.com"
   vars:
     run: false
     reboot: false
