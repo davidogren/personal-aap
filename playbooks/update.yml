@@ -42,14 +42,6 @@
     become: true
     register: dnf_ansible_taskout
 
-  - name: Add Ansible content
-    ansible.builtin.dnf:
-      name: ansible-navigator
-      enablerepo: ansible-automation-platform-2.4-for-rhel-8-x86_64-rpms
-      state: latest
-    become: true
-    register: dnf_ansible_taskout
-  
   - name: Update all packages
     ansible.builtin.dnf:
       name: "*"
