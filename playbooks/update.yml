@@ -6,7 +6,8 @@
     run: false
     reboot: false
   tasks:
-  
+
+  #Primarily just doning this as an example of a secondary credential
   - name: 'Register system using Red Hat Subscription Manager'
     community.general.redhat_subscription:
       state: present
@@ -19,14 +20,43 @@
     become: true
 
   #TODO: Verify the repos that I want (e.g. EPEL)
-    
-  - name: upgrade all packages
+
+  - name: Add Standard content
+    ansible.builtin.dnf:
+      name:
+        - cockpit-dashboard
+        - cockpit-podman
+        - cockpit-networkmanager
+        - cockpit-packagekit
+        - cockpit-storaged
+      state: present #Will update in next step if necessary
+    become: true
+    register: dnf_ansible_taskout
+
+  - name: Add Ansible content
+    ansible.builtin.dnf:
+      name:
+        - ansible-navigator
+      enablerepo: ansible-automation-platform-2.4-for-rhel-8-x86_64-rpms
+      state: present #Will update in next step if necessary
+    become: true
+    register: dnf_ansible_taskout
+
+  - name: Add Ansible content
+    ansible.builtin.dnf:
+      name: ansible-navigator
+      enablerepo: ansible-automation-platform-2.4-for-rhel-8-x86_64-rpms
+      state: latest
+    become: true
+    register: dnf_ansible_taskout
+  
+  - name: Update all packages
     ansible.builtin.dnf:
       name: "*"
       state: latest
       update_only: true
     become: true  
-    register: dnf_taskout
+    register: dnf_update_taskout
     
   - name: check to see if we need a reboot
     command: needs-restarting -r
@@ -71,7 +101,19 @@
     become: true
 
   #TODO: Verify the repos that I want (e.g. EPEL)
-    
+
+  - name: Add Standard content
+    ansible.builtin.dnf:
+      name:
+        - cockpit-dashboard
+        - cockpit-podman
+        - cockpit-networkmanager
+        - cockpit-packagekit
+        - cockpit-storaged
+      state: present #Will update in next step if necessary
+    become: true
+    register: dnf_ansible_taskout
+
   - name: upgrade all packages
     ansible.builtin.dnf:
       name: "*"
