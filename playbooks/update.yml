@@ -49,6 +49,8 @@
     local_action: wait_for host={{ inventory_hostname }} port=22
       state=started delay=30 timeout=600
     retries: 30
+    delay: 10
+    when: needrestart_result.rc == 1
 
 - name: Update all
   hosts: all
