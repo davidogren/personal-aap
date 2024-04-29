@@ -6,7 +6,20 @@
     run: false
     reboot: false
   tasks:
+  
+  - name: 'Register system using Red Hat Subscription Manager'
+    community.general.redhat_subscription:
+      state: present
+      username: "{{ uid_username) }}"
+      password: "{{ uid_password }}"
+      syspurpose:
+        usage: "Production"
+        role: "Red Hat Enterprise Server"
+        service_level_agreement: "Self-Support"
+    become: true
+
   #TODO: Verify the repos that I want (e.g. EPEL)
+    
   - name: upgrade all packages
     ansible.builtin.dnf:
       name: "*"
@@ -14,7 +27,7 @@
       update_only: true
     become: true  
     register: dnf_taskout
-
+    
   - name: check to see if we need a reboot
     command: needs-restarting -r
     become: true
