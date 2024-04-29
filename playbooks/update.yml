@@ -60,7 +60,7 @@
   - name: 'Register system using Red Hat Subscription Manager'
     community.general.redhat_subscription:
       state: present
-      username: "{{ uid_username) }}"
+      username: "{{ uid_username }}"
       password: "{{ uid_password }}"
       syspurpose:
         usage: "Production"
