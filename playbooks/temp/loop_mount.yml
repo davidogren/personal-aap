@@ -15,7 +15,7 @@
     ansible.posix.mount:
       src: //192.168.0.98/sync #TODO: use hostname
       path: /mnt/loop
-      opts: "rw,vers=3,file_mode=0600,dir_mode=0700,username={{ uid_username }},password={{ uid_password }}"
+      opts: "rw,vers=2.0,file_mode=0600,dir_mode=0700,username={{ uid_username }},password={{ uid_password }}"
       fstype: cifs
       state: mounted
       backup: true #TODO: remove
