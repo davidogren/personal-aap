@@ -27,6 +27,6 @@
       path: /mnt/loop
       opts: "rw,vers=2.0,file_mode=0,dir_mode=0700,uid={{ getent_passwd[rheluser].1}} ,username={{ uid_username }},password={{ uid_password }}"
       fstype: cifs
-      state: mounted
+      state: absent #temp: this should likely be mounted or ephemeral
       boot: true
     no_log: true
