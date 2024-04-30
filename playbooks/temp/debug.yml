@@ -1,6 +1,6 @@
 - name: Dump Variables
   hosts: auto.loudwalrus.com
-  
+
   tasks:
   - name: Display all variables/facts known for a host
     ansible.builtin.debug:

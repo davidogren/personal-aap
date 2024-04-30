@@ -1,8 +1,9 @@
+---
 - name: Daily maintainence
   hosts: all
 
   tasks:
-  - name: Apply security updates
+    - name: Apply security updates
     ansible.builtin.dnf:
       name: "*"
       state: latest
