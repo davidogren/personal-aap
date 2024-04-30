@@ -28,5 +28,5 @@
       opts: "rw,vers=2.0,file_mode=0,dir_mode=0700,uid={{ getent_passwd[rheluser].1}} ,username={{ uid_username }},password={{ uid_password }}"
       fstype: cifs
       state: mounted
-      backup: true #TODO: remove
       boot: true
+    no_log: true
