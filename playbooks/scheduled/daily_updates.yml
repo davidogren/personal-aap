@@ -1,11 +1,12 @@
-- hosts: all
+- name: Daily maintainence
+  hosts: all
 
   tasks:
-  - name: apply security updates
+  - name: Apply security updates
     ansible.builtin.dnf:
       name: "*"
       state: latest
       update_only: true
       security: true
-    become: true  
+    become: true
     register: dnf_taskout
