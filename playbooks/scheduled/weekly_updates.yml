@@ -54,6 +54,7 @@
     command: needs-restarting -r
     become: true
     register: needrestart_result
+    changed_when: False
     ignore_errors: yes
 
   - name: Reboot Server if Necessary
