@@ -122,8 +122,10 @@
     delay: 10
     when: needrestart_result.rc == 1 and "'ansiblehosts' not in group_names" | bool
 
+
+
 - name: Reboot controller if needed
-  hosts: ansiblehost
+  hosts: ansiblehosts
   vars:
     run: false
     reboot: false
