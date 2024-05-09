@@ -23,14 +23,14 @@
 
   - name: Copy public key
     ansible.builtin.copy:
-      path:  "/home/{{ rheluser  }}/.ssh/id_ecdsa.pub"
+      src:  "/home/{{ rheluser  }}/.ssh/id_ecdsa.pub"
       dest:  /mnt/loop/ansible/ssh_keys/
       backup: true
       remote_src: true
       
   - name: Copy secret key
     ansible.builtin.copy:
-      path:  "/home/{{ rheluser  }}/.ssh/id_ecdsa"
+      src:  "/home/{{ rheluser  }}/.ssh/id_ecdsa"
       dest:  /mnt/loop/ansible/ssh_keys/
       backup: true
       remote_src: true
