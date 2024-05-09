@@ -60,7 +60,7 @@
       fstype: cifs
       state: present #temp: this should likely be mounted or ephemeral
       boot: true
-    no_log: true #password shown in opts
+    no_log: false #password shown in opts
 
 - name: Update all
   hosts: all
