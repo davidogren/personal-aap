@@ -25,15 +25,15 @@
     ansible.builtin.copy:
       src:  "/home/{{ rheluser  }}/.ssh/id_ecdsa.pub"
       dest:  "/mnt/loop/ansible/ssh_keys/id_ecdsa.pub"
-      backup: true
+      #backup: true
       remote_src: true
-      unsafe_writes: true
+      #unsafe_writes: true
       
   - name: Copy secret key
     ansible.builtin.copy:
       src:  "/home/{{ rheluser  }}/.ssh/id_ecdsa"
       dest:  "/mnt/loop/ansible/ssh_keys/id_ecdsa"
-      backup: true
+      #backup: true
       remote_src: true
       unsafe_writes: true
 
