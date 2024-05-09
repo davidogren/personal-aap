@@ -43,31 +43,24 @@
       update_only: true
     become: true  
     register: dnf_update_taskout
-    
-  - name: check to see if we need a reboot
-    command: needs-restarting -r
-    become: true
-    register: needrestart_result
-    changed_when: False
-    ignore_errors: yes
 
-  - name: Reboot Server if Necessary
-    command: shutdown -r now "Ansible Updates Triggered"
-    become: true
-    async: 30
-    poll: 0
-    when: needrestart_result.rc == 1
+  - name: Load passwd as database 
+    ansible.builtin.getent:
+      database: passwd
 
-  - name: Pausing to allow server to shutdown and terminate our SSH connection
-    pause: seconds=30
-    when: needrestart_result.rc == 1
-
-  - name: Wait for reboot to complete and SSH to become available
-    local_action: wait_for host={{ inventory_hostname }} port=22
-      state=started delay=30 timeout=600
-    retries: 30
-    delay: 10
-    when: needrestart_result.rc == 1
+  - name: Log uid since mount task will be redacted
+    ansible.builtin.debug:
+      msg: 'uid {{ getent_passwd[rheluser].1 }}'
+      
+  - name: Mount NAS SMB volume
+    ansible.posix.mount:
+      src: //192.168.0.98/sync #TODO: use hostname
+      path: /mnt/loop
+      opts: "rw,vers=2.0,file_mode=0,dir_mode=0700,uid={{ getent_passwd[rheluser].1}} ,username={{ uid_username }},password={{ uid_password }}"
+      fstype: cifs
+      state: present #temp: this should likely be mounted or ephemeral
+      boot: true
+    no_log: true #password shown in opts
 
 - name: Update all
   hosts: all
@@ -109,21 +102,43 @@
     become: true
     register: needrestart_result
     ignore_errors: yes
+    when: "'ansiblehosts' not in group_names"
 
   - name: Reboot Server if Necessary
     command: shutdown -r now "Ansible Updates Triggered"
     become: true
     async: 30
     poll: 0
-    when: needrestart_result.rc == 1
+    when: needrestart_result.rc == 1 and "'ansiblehosts' not in group_names" | bool
 
   - name: Pausing to allow server to shutdown and terminate our SSH connection
     pause: seconds=30
-    when: needrestart_result.rc == 1
+    when: needrestart_result.rc == 1 and "'ansiblehosts' not in group_names" | bool
 
   - name: Wait for reboot to complete and SSH to become available
     local_action: wait_for host={{ inventory_hostname }} port=22
       state=started delay=30 timeout=600
     retries: 30    
     delay: 10
-    when: needrestart_result.rc == 1
+    when: needrestart_result.rc == 1 and "'ansiblehosts' not in group_names" | bool
+
+- name: Reboot controller if needed
+  hosts: ansiblehosdt
+  vars:
+    run: false
+    reboot: false
+  tasks:
+  - name: Reboot Server if Necessary
+    command: shutdown -r now "Ansible Updates Triggered"
+    become: true
+    async: 30
+    poll: 0
+    when: needrestart_result.rc == 1 and "'ansiblehosts' not in group_names" | bool
+
+  - name: Reboot Server if Necessary
+    command: shutdown -r now "Ansible Updates Triggered"
+    become: true
+    async: 30
+    poll: 0
+    when: needrestart_result.rc == 1 and "'ansiblehosts' not in group_names" | bool
+
