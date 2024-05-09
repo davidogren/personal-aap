@@ -5,7 +5,7 @@
   vars:
     run: false
     reboot: false
-  
+
   #Primarily just doing this as an example of a secondary credential
   tasks:
   - name: 'Register system using Red Hat Subscription Manager'
@@ -30,8 +30,7 @@
 
   - name: Add Ansible content
     ansible.builtin.dnf:
-      name:
-        - ansible-navigator
+      name: "{{ custom_content }}"
       enablerepo: ansible-automation-platform-2.4-for-rhel-8-x86_64-rpms
       state: present #Will update in next step if necessary
     become: true
@@ -92,12 +91,7 @@
 
   - name: Add Standard content
     ansible.builtin.dnf:
-      name:
-        - cockpit-dashboard
-        - cockpit-podman
-        - cockpit-networkmanager
-        - cockpit-packagekit
-        - cockpit-storaged
+      name: "{{ standard_packages }}"
       state: present #Will update in next step if necessary
     become: true
     register: dnf_ansible_taskout
