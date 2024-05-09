@@ -34,6 +34,7 @@
       dest:  /mnt/loop/ansible/ssh_keys/
       backup: true
       remote_src: true
+      unsafe_writes: true
 
 
 
