@@ -61,7 +61,7 @@
       state: mounted 
       boot: true
     become: true
-    no_log: false #password shown in opts
+    no_log: true #password shown in opts
 
 
 
