@@ -58,10 +58,12 @@
       path: /mnt/loop
       opts: "rw,vers=2.0,file_mode=0,dir_mode=0700,uid={{ getent_passwd[rheluser].1}} ,username={{ smb_username }},password={{ smb_password }}"
       fstype: cifs
-      state: present #temp: this should likely be mounted or ephemeral
+      state: mounted 
       boot: true
     become: true
     no_log: true #password shown in opts
+
+
 
 - name: Update all
   hosts: all
@@ -121,8 +123,6 @@
     retries: 30    
     delay: 10
     when: needrestart_result.rc == 1 and "'ansiblehosts' not in group_names" | bool
-
-
 
 - name: Reboot controller if needed
   hosts: ansiblehosts
