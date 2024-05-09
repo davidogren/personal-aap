@@ -5,8 +5,15 @@
   vars:
     run: false
     reboot: false
+    standard_packages:
+      - cockpit-dashboard
+      - cockpit-podman
+      - cockpit-networkmanager
+      - cockpit-packagekit
+      - cockpit-storaged
+    
   
-  #Primarily just doning this as an example of a secondary credential
+  #Primarily just doing this as an example of a secondary credential
   tasks:
   - name: 'Register system using Red Hat Subscription Manager'
     community.general.redhat_subscription:
@@ -23,12 +30,7 @@
 
   - name: Add Standard content
     ansible.builtin.dnf:
-      name:
-        - cockpit-dashboard
-        - cockpit-podman
-        - cockpit-networkmanager
-        - cockpit-packagekit
-        - cockpit-storaged
+      name: "{{ standard_packages }}"
       state: present #Will update in next step if necessary
     become: true
     register: dnf_ansible_taskout
