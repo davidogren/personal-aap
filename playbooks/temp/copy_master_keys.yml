@@ -19,35 +19,22 @@
       state: present
       boot: true
     become: true
-    no_log: false #password shown in opts
-
-  - name: test 1 (pass?)
-    ansible.builtin.copy:
-      src:  "/home/ogren/.ssh/id_ecdsa.pub"
-      dest:  "/home/ogren/foo"
-      #backup: true
-      remote_src: true
-      #unsafe_writes: true
-    ignore_errors: true
+    no_log: true #password shown in opts
 
   - name: Copy public key (root?)
     ansible.builtin.copy:
-      src:  "/home/ogren/.ssh/id_ecdsa.pub"
+      src:  "/home/{{ rheluser  }}/.ssh/id_ecdsa.pub"
       dest:  "/mnt/loop/ansible/ssh_keys/id_ecdsa.pub"
-      #backup: true
+      backup: true
       remote_src: true
-      #unsafe_writes: true
-    become: true
-    ignore_errors: true
+
       
   - name: Copy secret key (remote?)
     ansible.builtin.copy:
       src:  "/home/{{ rheluser  }}/.ssh/id_ecdsa"
       dest:  "/mnt/loop/ansible/ssh_keys/id_ecdsa"
-      #backup: true
+      backup: true
       remote_src: true
-      unsafe_writes: true
-    ignore_errors: true
 
 
 
