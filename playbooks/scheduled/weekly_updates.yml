@@ -5,13 +5,6 @@
   vars:
     run: false
     reboot: false
-    standard_packages:
-      - cockpit-dashboard
-      - cockpit-podman
-      - cockpit-networkmanager
-      - cockpit-packagekit
-      - cockpit-storaged
-    
   
   #Primarily just doing this as an example of a secondary credential
   tasks:
