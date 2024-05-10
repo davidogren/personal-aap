@@ -1,5 +1,5 @@
 - name: Add host to inventory
-  hosts: auto.loudwalrus.com
+  hosts: auto.loudwalrus.com ## To fix, needs to run on DNS
   vars: 
      groupinfo: "{{ groups }}"
      
@@ -12,10 +12,12 @@
       
   - name: Get groups 
     ansible.builtin.debug:
-      var: groups
+      var: groups['dummy']
       
-
-
+  - name: Host vars 
+    ansible.builtin.debug:
+      var: foo
+      
   - name: Add group
     ansible.controller.group:
       name: dummy
@@ -23,7 +25,7 @@
       inventory: "Manual"
       state: present
       validate_certs: false
-      controller_host: localhost
+      controller_host: localhost ## To fix, needs to remotely call controller
       controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
       controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
       #controller_config_file: "~/tower_cli.cfg"
