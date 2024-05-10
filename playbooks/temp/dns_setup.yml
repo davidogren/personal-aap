@@ -1,8 +1,17 @@
+
+- name: bootstrap  hosts
+  hosts: dnshosts
+  become: yes
+  gather_facts: no
+
+  roles:
+    - role: robertdebock.bootstrap
+
+
 - name: WIP to configure DNS
   hosts: dnshosts ## replace
 
   roles:
-    - role: robertdebock.bootstrap
     - role: robertdebock.core_dependencies
       # bootstrap_user: "{{ rheluser }}"
     - role: robertdebock.dns
@@ -26,11 +35,10 @@
               value: "::1"   
 
   tasks:
-  - name: Install package for SMB mount
+  - name: Install 
     ansible.builtin.dnf:
       name: "{{ dns_content }}"
       state: latest
     become: true
     register: dnf_taskout
 
-  - 
