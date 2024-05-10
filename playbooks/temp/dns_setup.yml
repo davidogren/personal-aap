@@ -1,20 +1,20 @@
 
-- name: bootstrap  hosts
-  hosts: dnshosts
-  become: yes
-  gather_facts: no
-
-  roles:
-    - role: robertdebock.bootstrap
+#- name: bootstrap  hosts
+#  hosts: dnshosts
+#  become: yes
+#  gather_facts: no
+#
+#  roles:
+#    - role: robertdebock.bootstrap
 
 
 - name: WIP to configure DNS
-  hosts: dnshosts ## replace
+  hosts: dnshosts
 
   roles:
-    - role: robertdebock.core_dependencies
-      become: true
-      # bootstrap_user: "{{ rheluser }}"
+#    - role: robertdebock.core_dependencies
+#      become: true
+#      # bootstrap_user: "{{ rheluser }}"
     - role: robertdebock.dns
       become: true
       dns_zones:
@@ -35,6 +35,40 @@
             - name: "@"
               type: AAAA
               value: "::1"   
+        - name: "127.in-addr.arpa"
+          ttl: 604800
+          type: primary
+          records:
+            - name: "@"
+              type: NS
+              value: localhost.
+            - name: "1.0.0"
+              type: PTR
+              value: localhost.
+        - name: "0.in-addr.arpa"
+          type: primary
+          records:
+            - name: "@"
+              type: NS
+              value: localhost.
+        - name: "255.in-addr.arpa"
+          type: primary
+          records:
+            - name: "@"
+              type: NS
+              value: localhost.      
+        - name: loudwalrus.com
+          type: primary
+          ttl: 604800
+          ns:
+            - name: auto.loudwalrus.com
+          records:
+            - name: auto.loudwalrus.com
+              value: "192.0.0.66"
+            - name: boba
+              value: "127.0.0.67"
+            - name: loop
+              value: "127.0.0.98"
 
   tasks:
   - name: Install 
