@@ -1,9 +1,9 @@
 - name: rhsm
   src: https://github.com/redhat-cop/infra-ansible
   version: v2.0.8
-- name: dns
+- name: robertdebock.dns
   src: https://github.com/robertdebock/ansible-role-dns
   version: 4.0.1
-- name: bootstrap
+- name: robertdebock.bootstrap
   src: https://github.com/robertdebock/ansible-role-bootstrap
   version: 6.2.5
