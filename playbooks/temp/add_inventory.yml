@@ -3,7 +3,7 @@
   tasks:
 
 - name: Add group
-  group:
+  awx.awx.group:
     name: dummy
     description: "For Testing"
     inventory: "Manual"
