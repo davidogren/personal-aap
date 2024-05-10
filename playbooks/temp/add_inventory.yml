@@ -7,7 +7,7 @@
 
   - name: Get group info
     ansible.builtin.debug:
-      var: groupinfo:
+      var: groupinfo
       
 
   - name: Add group
