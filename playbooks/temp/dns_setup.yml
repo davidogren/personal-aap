@@ -1,4 +1,3 @@
-## Configure DNS
 - name: WIP to configure DNS
   hosts: dnshosts ## replace
 

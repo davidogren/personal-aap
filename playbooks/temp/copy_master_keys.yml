@@ -21,7 +21,7 @@
     become: true
     no_log: true #password shown in opts
 
-  - name: Copy public key (root?)
+  - name: Copy public key
     ansible.builtin.copy:
       src:  "/home/{{ rheluser  }}/.ssh/id_ecdsa.pub"
       dest:  "/mnt/loop/ansible/ssh_keys/id_ecdsa.pub"
@@ -29,7 +29,7 @@
       remote_src: true
 
       
-  - name: Copy secret key (remote?)
+  - name: Copy secret key
     ansible.builtin.copy:
       src:  "/home/{{ rheluser  }}/.ssh/id_ecdsa"
       dest:  "/mnt/loop/ansible/ssh_keys/id_ecdsa"
