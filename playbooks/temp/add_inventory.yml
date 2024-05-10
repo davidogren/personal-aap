@@ -7,8 +7,14 @@
 
   - name: Get group info
     ansible.builtin.debug:
-      var: group
+      var: group_names
+    ignore_errors: true
       
+  - name: Get groups 
+    ansible.builtin.debug:
+      var: groups
+      
+
 
   - name: Add group
     ansible.controller.group:
