@@ -1,7 +1,8 @@
 - name: Add host to inventory
   hosts: auto.loudwalrus.com
   vars: 
-     groupinfo: "{{ groups['dummy'] }}
+     groupinfo: "{{ groups['dummy'] }}"
+     
   tasks:
 
   - name: Get group info
