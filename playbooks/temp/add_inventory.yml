@@ -10,6 +10,6 @@
       state: present
       #controller_config_file: "~/tower_cli.cfg"
       variables:
-        - foo: 
+        foo: 
           - bar 
           - baz
