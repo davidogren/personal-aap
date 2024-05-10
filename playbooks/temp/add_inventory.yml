@@ -1,0 +1,15 @@
+- name: Add host to inventory
+  hosts: auto.loudwalrus.com
+  tasks:
+
+- name: Add group
+  group:
+    name: dummy
+    description: "For Testing"
+    inventory: "Manual"
+    state: present
+    #controller_config_file: "~/tower_cli.cfg"
+    variables:
+      - foo: 
+        - bar 
+        - baz
