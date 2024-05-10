@@ -1,12 +1,36 @@
 - name: WIP to configure DNS
   hosts: dnshosts ## replace
 
+  roles:
+    - role: robertdebock.bootstrap
+    - role: robertdebock.core_dependencies
+      # bootstrap_user: "{{ rheluser }}"
+    - role: robertdebock.dns
+      dns_zones:
+        - name: localhost
+          type: primary
+          soa: localhost
+          serial: 1
+          refresh: 604800
+          retry: 86400
+          expire: 2419200
+          ttl: 604800
+          records:
+            - name: "@"
+              type: NS
+              value: localhost.
+            - name: "@"
+              value: "127.0.0.1"
+            - name: "@"
+              type: AAAA
+              value: "::1"   
+
   tasks:
   - name: Install package for SMB mount
     ansible.builtin.dnf:
       name: "{{ dns_content }}"
       state: latest
+    become: true
     register: dnf_taskout
 
-
-
+  - 
