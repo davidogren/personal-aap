@@ -1,0 +1,13 @@
+## Configure DNS
+- name: WIP to configure DNS
+  hosts: dnshosts ## replace
+
+  tasks:
+  - name: Install package for SMB mount
+    ansible.builtin.dnf:
+      name: {{ dns_content }}
+      state: latest
+    register: dnf_taskout
+
+
+

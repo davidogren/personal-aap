@@ -30,7 +30,7 @@
 
   - name: Add Ansible content
     ansible.builtin.dnf:
-      name: "{{ custom_content }}"
+      name: "{{ ansible_content }}"
       enablerepo: ansible-automation-platform-2.4-for-rhel-8-x86_64-rpms
       state: present #Will update in next step if necessary
     become: true
