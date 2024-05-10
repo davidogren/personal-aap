@@ -1,9 +1,16 @@
 - name: Add host to inventory
   hosts: auto.loudwalrus.com
+  vars: 
+     groupinfo: "{{ groups['dummy'] }}
   tasks:
 
+  - name: Get group info
+    ansible.builtin.debug:
+      var: groupinfo:
+      
+
   - name: Add group
-    awx.awx.group:
+    ansible.controller.group:
       name: dummy
       description: "For Testing"
       inventory: "Manual"
