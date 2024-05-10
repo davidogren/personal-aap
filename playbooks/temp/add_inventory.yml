@@ -5,19 +5,14 @@
      
   tasks:
 
-  - name: Get group info
-    ansible.builtin.debug:
-      var: group_names
-    ignore_errors: true
-      
-  - name: Get groups 
-    ansible.builtin.debug:
-      var: groups['dummy']
-      
   - name: Host vars 
     ansible.builtin.debug:
       var: foo
-      
+
+  - name: Update list
+    ansible.builtin.set_fact:
+      new_foo: "{{ foo + ['qaz'] }}"
+
   - name: Add group
     ansible.controller.group:
       name: dummy
@@ -29,7 +24,7 @@
       controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
       controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
       #controller_config_file: "~/tower_cli.cfg"
+      hosts:
+        - auto.loudwalrus.com
       variables:
-        foo: 
-          - bar 
-          - baz
+        foo: "{{ new_foo }}"
