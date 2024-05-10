@@ -4,3 +4,6 @@
 - name: dns
   src: https://github.com/robertdebock/ansible-role-dns
   version: 4.0.1
+- name: bootstrap
+  src: https://github.com/robertdebock/ansible-role-bootstrap
+  version: 6.2.5
