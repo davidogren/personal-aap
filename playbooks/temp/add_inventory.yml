@@ -9,6 +9,8 @@
       inventory: "Manual"
       state: present
       validate_certs: false
+      controller_username: "{{ CONTROLLER_USERNAME }}"
+      controller_password: "{{ CONTROLLER_PASSWORD }}"
       #controller_config_file: "~/tower_cli.cfg"
       variables:
         foo: 
