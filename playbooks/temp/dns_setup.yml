@@ -11,6 +11,18 @@
 - name: WIP to configure DNS
   hosts: dnshosts
 
+  tasks:
+    - name: Dump hostvar
+      ansible.builtin.debug:
+        var: hostvars
+
+    - name: Install 
+      ansible.builtin.dnf:
+        name: "{{ dns_content }}"
+        state: latest
+        become: true
+      register: dnf_taskout
+
   roles:
 #    - role: robertdebock.core_dependencies
 #      become: true
@@ -73,11 +85,5 @@
             - name: loop
               value: "127.0.0.98"
 
-  tasks:
-  - name: Install 
-    ansible.builtin.dnf:
-      name: "{{ dns_content }}"
-      state: latest
-    become: true
-    register: dnf_taskout
+
 
