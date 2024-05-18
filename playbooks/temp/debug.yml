@@ -2,11 +2,11 @@
   hosts: auto.loudwalrus.com
 
   tasks:
-  - name: Display all variables/facts known for a host
-    ansible.builtin.debug:
-      var: hostvars[inventory_hostname]
-      verbosity: 2
-  - name: Display uid_username
-    ansible.builtin.debug:
-      var: uid_username
-      verbosity: 2
+    - name: Display all variables/facts known for a host
+      ansible.builtin.debug:
+        var: hostvars[inventory_hostname]
+        verbosity: 2
+    - name: Display uid_username
+      ansible.builtin.debug:
+        var: uid_username
+        verbosity: 2

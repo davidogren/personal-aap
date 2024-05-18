@@ -5,28 +5,29 @@
     rheluser: ogren
 
   tasks:
-  - name: Install package for SMB mount
-    ansible.builtin.dnf:
-      name: cifs-utils
-      state: latest
-    register: dnf_taskout
+    - name: Install package for SMB mount
+      ansible.builtin.dnf:
+        name: cifs-utils >= 7.0
+        state: present
 
-  ## TODO verify DNS mount
+      register: dnf_taskout
 
-  - name: Load passwd as database 
-    ansible.builtin.getent:
-      database: passwd
+    ## TODO verify DNS mount
 
-  - name: Log uid since opts will be redacted because of passwordds
-    ansible.builtin.debug:
-      msg: 'uid {{ getent_passwd["ogren"].1 }}'
-      
-  - name: Mount ephemeral SMB volume
-    ansible.posix.mount:
-      src: //192.168.0.98/sync #TODO: use hostname
-      path: /mnt/loop
-      opts: "rw,vers=2.0,file_mode=0,dir_mode=0700,uid={{ getent_passwd[rheluser].1}} ,username={{ uid_username }},password={{ uid_password }}"
-      fstype: cifs
-      state: absent #temp: this should likely be mounted or ephemeral
-      boot: true
-    no_log: true
+    - name: Load passwd as database
+      ansible.builtin.getent:
+        database: passwd
+
+    - name: Log uid since opts will be redacted because of passwordds
+      ansible.builtin.debug:
+        msg: 'uid {{ getent_passwd["ogren"].1 }}'
+
+    - name: Mount ephemeral SMB volume
+      ansible.posix.mount:
+        src: //192.168.0.98/sync # TODO: use hostname
+        path: /mnt/loop
+        opts: "rw,vers=2.0,file_mode=0,dir_mode=0700,uid={{ getent_passwd[rheluser].1}} ,username={{ uid_username }},password={{ uid_password }}"
+        fstype: cifs
+        state: absent # temp: this should likely be mounted or ephemeral
+        boot: true
+      no_log: true
