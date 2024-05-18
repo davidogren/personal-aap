@@ -3,11 +3,11 @@
   hosts: all
 
   tasks:
-  - name: Apply security updates
-    ansible.builtin.dnf:
-      name: "*"
-      state: latest
-      update_only: true
-      security: true
-    become: true
-    register: dnf_taskout
+    - name: Apply security updates
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+        update_only: true
+        security: true
+      become: true
+      register: dnf_taskout
