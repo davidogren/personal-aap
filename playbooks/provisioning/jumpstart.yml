@@ -27,7 +27,6 @@
       ansible.builtin.add_host:
         name: '{{ new_fqdn }}'
         groups: dummy
-        foo: bar
 
 - name: Initial kickstart
   hosts: new_fqdn
