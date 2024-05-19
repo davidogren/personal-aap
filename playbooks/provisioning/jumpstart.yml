@@ -23,7 +23,7 @@
       ansible.builtin.assert:
         that:
           - valid_ip != false
-          - exists_host
+          - not exists_host
 
     - name: Dump list
       ansible.builtin.debug:
@@ -31,7 +31,7 @@
 
     - name: Loop over inventory
       ansible.builtin.debug:
-        msg: "ping"
+        msg: ping {{ item.key }}
       loop: "{{ hostitems }}"
 
     # - name: Update list # TODO: Remove
