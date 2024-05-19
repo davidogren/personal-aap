@@ -21,7 +21,7 @@
       ansible.builtin.debug:
         var: not exists_host
         verbosity: 0
-      failed_when: not exists_host
+      failed_when: exists_host
 
     - name: Dump list
       ansible.builtin.debug:
@@ -30,7 +30,7 @@
     - name: Loop over inventory
       ansible.builtin.debug:
         var: item.value.dns_ip
-      loop: hostitems
+      loop: "{{ hostitems }}"
 
     - name: Dump exists
       ansible.builtin.debug:
