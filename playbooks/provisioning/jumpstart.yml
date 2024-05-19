@@ -9,7 +9,7 @@
   tasks:
     - name: Verify valid IP
       ansible.builtin.set_fact:
-        var: valid_ip = "{{ new_ip | ansible.utils.ip }}" 
+        var: valid_ip = "{{ new_ip | ansible.utils.ipaddr }}" 
       failed_when: not valid_ip
       ignore_errors: true
 
@@ -17,7 +17,13 @@
       ansible.builtin.set_fact:
         var: exists_host = "{{ hostvars is contains( new_fqdn ) }}"
       failed_when: exists_host
- 
+      register: test_select
+      ignore_errors: true
+    
+    - name: Dump exists
+      ansible.builtin.debug:
+        var: exists_host
+
     - name: Host vars 
       ansible.builtin.debug:
         var: hostvars
