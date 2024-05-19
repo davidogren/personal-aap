@@ -22,8 +22,8 @@
     - name: Assert host can be created
       ansible.builtin.assert:
         that:
-        - valid_ip == false
-        - exists_host
+          - valid_ip != false
+          - exists_host
 
     - name: Dump list
       ansible.builtin.debug:
@@ -33,8 +33,6 @@
       ansible.builtin.debug:
         msg: "ping"
       loop: "{{ hostitems }}"
-
-
 
     # - name: Update list # TODO: Remove
     #   ansible.builtin.set_fact:

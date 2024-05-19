@@ -1,0 +1,183 @@
+---
+hostvars:
+  boba.loudwalrus.com:
+    inventory_file: "/runner/inventory/hosts"
+    inventory_dir: "/runner/inventory"
+    dns_ip: fred
+    remote_host_enabled: 'true'
+    remote_host_id: 5
+    remote_tower_enabled: 'true'
+    remote_tower_id: 5
+    inventory_hostname: boba.loudwalrus.com
+    inventory_hostname_short: boba
+    group_names:
+    - ungrouped
+    ansible_facts: {}
+    new_hostname: boba
+    new_domainname: loudwalrus.com
+    new_ip: fred
+    awx_job_id: 340
+    awx_job_launch_type: manual
+    tower_job_id: 340
+    tower_job_launch_type: manual
+    awx_user_id: 2
+    awx_user_name: ogren
+    awx_user_email: dogren@fastmail.fm
+    awx_user_first_name: David
+    awx_user_last_name: Ogren
+    tower_user_id: 2
+    tower_user_name: ogren
+    tower_user_email: dogren@fastmail.fm
+    tower_user_first_name: David
+    tower_user_last_name: Ogren
+    awx_inventory_id: 1
+    awx_inventory_name: Manual
+    tower_inventory_id: 1
+    tower_inventory_name: Manual
+    awx_project_revision: d6eaa23c2c5599b4570461272dd3de92e9540c8f
+    awx_project_scm_branch: ''
+    tower_project_revision: d6eaa23c2c5599b4570461272dd3de92e9540c8f
+    tower_project_scm_branch: ''
+    awx_job_template_id: 18
+    awx_job_template_name: Provision New Machine
+    tower_job_template_id: 18
+    tower_job_template_name: Provision New Machine
+    awx_execution_node: ming.loudwalrus.com
+    tower_execution_node: ming.loudwalrus.com
+    playbook_dir: "/runner/project/playbooks/provisioning"
+    ansible_playbook_python: "/usr/bin/python3.9"
+    ansible_config_file: "/etc/ansible/ansible.cfg"
+    groups:
+      all:
+      - boba.loudwalrus.com
+      - auto.loudwalrus.com
+      ungrouped:
+      - boba.loudwalrus.com
+      ansiblehosts:
+      - auto.loudwalrus.com
+      dnshosts:
+      - auto.loudwalrus.com
+      dummy:
+      - auto.loudwalrus.com
+      rhelhosts:
+      - auto.loudwalrus.com
+    omit: __omit_place_holder__2aa95382746596c79b8d1b066d251b2106c28977
+    ansible_version:
+      string: 2.15.10
+      full: 2.15.10
+      major: 2
+      minor: 15
+      revision: 10
+    ansible_check_mode: false
+    ansible_diff_mode: false
+    ansible_forks: 5
+    ansible_inventory_sources:
+    - "/runner/inventory/hosts"
+    ansible_skip_tags: []
+    ansible_run_tags:
+    - all
+    ansible_verbosity: 0
+  auto.loudwalrus.com:
+    ansible_content:
+    - ansible-navigator
+    - cifs-utils
+    dns_content:
+    - bind >= 9.11
+    foo:
+    - bar
+    - baz
+    - qaz
+    - qaz
+    - qaz
+    - qaz
+    - qaz
+    rheluser: ogren
+    standard_packages:
+    - cockpit-dashboard
+    - cockpit-podman
+    - cockpit-networkmanager
+    - cockpit-packagekit
+    - cockpit-storaged
+    inventory_file: "/runner/inventory/hosts"
+    inventory_dir: "/runner/inventory"
+    ansiblerole: controller
+    dns_ip: 192.168.0.66
+    remote_host_enabled: 'true'
+    remote_host_id: 2
+    remote_tower_enabled: 'true'
+    remote_tower_id: 2
+    inventory_hostname: auto.loudwalrus.com
+    inventory_hostname_short: auto
+    group_names:
+    - ansiblehosts
+    - dnshosts
+    - dummy
+    - rhelhosts
+    ansible_facts: {}
+    new_hostname: boba
+    new_domainname: loudwalrus.com
+    new_ip: fred
+    awx_job_id: 340
+    awx_job_launch_type: manual
+    tower_job_id: 340
+    tower_job_launch_type: manual
+    awx_user_id: 2
+    awx_user_name: ogren
+    awx_user_email: dogren@fastmail.fm
+    awx_user_first_name: David
+    awx_user_last_name: Ogren
+    tower_user_id: 2
+    tower_user_name: ogren
+    tower_user_email: dogren@fastmail.fm
+    tower_user_first_name: David
+    tower_user_last_name: Ogren
+    awx_inventory_id: 1
+    awx_inventory_name: Manual
+    tower_inventory_id: 1
+    tower_inventory_name: Manual
+    awx_project_revision: d6eaa23c2c5599b4570461272dd3de92e9540c8f
+    awx_project_scm_branch: ''
+    tower_project_revision: d6eaa23c2c5599b4570461272dd3de92e9540c8f
+    tower_project_scm_branch: ''
+    awx_job_template_id: 18
+    awx_job_template_name: Provision New Machine
+    tower_job_template_id: 18
+    tower_job_template_name: Provision New Machine
+    awx_execution_node: ming.loudwalrus.com
+    tower_execution_node: ming.loudwalrus.com
+    playbook_dir: "/runner/project/playbooks/provisioning"
+    ansible_playbook_python: "/usr/bin/python3.9"
+    ansible_config_file: "/etc/ansible/ansible.cfg"
+    groups:
+      all:
+      - boba.loudwalrus.com
+      - auto.loudwalrus.com
+      ungrouped:
+      - boba.loudwalrus.com
+      ansiblehosts:
+      - auto.loudwalrus.com
+      dnshosts:
+      - auto.loudwalrus.com
+      dummy:
+      - auto.loudwalrus.com
+      rhelhosts:
+      - auto.loudwalrus.com
+    omit: __omit_place_holder__2aa95382746596c79b8d1b066d251b2106c28977
+    ansible_version:
+      string: 2.15.10
+      full: 2.15.10
+      major: 2
+      minor: 15
+      revision: 10
+    ansible_check_mode: false
+    ansible_diff_mode: false
+    ansible_forks: 5
+    ansible_inventory_sources:
+    - "/runner/inventory/hosts"
+    ansible_skip_tags: []
+    ansible_run_tags:
+    - all
+    ansible_verbosity: 0
+_ansible_verbose_always: true
+_ansible_no_log: false
+changed: false
