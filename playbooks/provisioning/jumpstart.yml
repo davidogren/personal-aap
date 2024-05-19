@@ -1,8 +1,7 @@
-
 - name: Config new host in inventory
   hosts: localhost
-  vars: 
-    new_fqdn: {{ new_hostname + "." + new_domainname }}
+  vars:
+    new_fqdn: "{{ new_hostname + '.' + new_domainname }}"
 
   # roles:
   #   - role: robertdebock.bootstrap
@@ -24,7 +23,6 @@
   hosts: new_fqdn
 
   tasks:
-    - name: set hostname
+    - name: Set hostname
       ansible.builtin.hostname:
         name: new_hostname
-        

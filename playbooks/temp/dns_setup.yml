@@ -11,6 +11,10 @@
 - name: WIP to configure DNS
   hosts: dnshosts
 
+  pre_tasks:
+    - name:
+
+    
   tasks:
     - name: Dump hostvar
       ansible.builtin.debug:
@@ -20,7 +24,7 @@
       ansible.builtin.dnf:
         name: "{{ dns_content }}"
         state: latest
-        become: true
+      become: true
       register: dnf_taskout
 
   roles:
