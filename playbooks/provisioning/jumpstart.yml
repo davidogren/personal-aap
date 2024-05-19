@@ -37,11 +37,11 @@
 
     - name: print one
       ansible.builtin.debug:
-        var:foo 
+        var: foo 
 
     - name: print final
       ansible.builtin.debug:
-        var:mylist
+        var: mylist
 
     # - name: Update list # TODO: Remove
     #   ansible.builtin.set_fact:
