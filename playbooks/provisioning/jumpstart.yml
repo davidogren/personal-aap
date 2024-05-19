@@ -15,17 +15,21 @@
 
     - name: Test select
       ansible.builtin.set_fact:
-        var: exists_host = "{{ hostvars is contains('auto.loudwalrus.com') }}"
-      ignore_errors: true
+        var: exists_host = "{{ hostvars is contains( new_fqdn ) }}"
+      failed_when: exists_host
  
-    - name: Test filter
-      ansible.builtin.set_fact:
-        var: dns_host_list = "{{ hostvars | subelements('dns_ip', skip_missing=True) }}"
-      ignore_errors: true
-      
     - name: Host vars 
       ansible.builtin.debug:
         var: hostvars
+
+    - name: Host items
+      ansible.builtin.set_fact:
+        var: hostitems = "{{ hostvars| dict2items }}"
+
+    - name: Test filter
+      ansible.builtin.set_fact:
+        var: dns_host_list = "{{ hostitems | subelements('dns_ip', skip_missing=True) }}"
+      ignore_errors: true
 
     - name: Update list # TODO: Remove
       ansible.builtin.set_fact:
