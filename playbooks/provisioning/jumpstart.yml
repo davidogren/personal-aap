@@ -2,7 +2,7 @@
   hosts: localhost
   vars:
     new_fqdn: "{{ new_hostname + '.' + new_domainname }}"
-    valid_ip: "{{ new_ip | ansible.utils.ipaddr }}"
+    valid_ip: "{{ new_ip | ansible.utils.ipaddr | bool}}"
     exists_host: "{{ hostvars is contains( new_fqdn ) }}"
     hostitems: "{{ hostvars | dict2items }}"
     mylist: []
@@ -19,7 +19,7 @@
 
     - name: Assert hostname is unique
       ansible.builtin.debug:
-        var: not exists_host
+        var: exists_host
         verbosity: 0
       failed_when: exists_host
 
@@ -29,7 +29,7 @@
 
     - name: Loop over inventory
       ansible.builtin.debug:
-        var: item.value.dns_ip
+        msg: "ping"
       loop: "{{ hostitems }}"
 
     - name: Dump exists
@@ -40,10 +40,6 @@
       ansible.builtin.debug:
         var: hostvars
 
-    - name: Test filter
-      ansible.builtin.set_fact:
-        var: dns_host_list = "{{ hostitems | subelements('dns_ip', skip_missing=True) }}"
-      ignore_errors: true
 
     # - name: Update list # TODO: Remove
     #   ansible.builtin.set_fact:
