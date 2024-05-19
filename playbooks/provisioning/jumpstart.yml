@@ -7,6 +7,30 @@
   #   - role: robertdebock.bootstrap
 
   tasks:
+    - name: Verify valid IP
+      ansible.builtin.set_fact:
+        var: valid_ip = "{{ new_ip | ansible.utils.ip }}" 
+      failed_when: not valid_ip
+      ignore_errors: true
+
+    - name: Test select
+      ansible.builtin.set_fact:
+        var: exists_host = "{{ hostvars is contains('auto.loudwalrus.com') }}"
+      ignore_errors: true
+ 
+    - name: Test filter
+      ansible.builtin.set_fact:
+        var: dns_host_list = "{{ hostvars | subelements('dns_ip', skip_missing=True) }}"
+      ignore_errors: true
+      
+    - name: Host vars 
+      ansible.builtin.debug:
+        var: hostvars
+
+    - name: Update list # TODO: Remove
+      ansible.builtin.set_fact:
+        new_foo: "{{ foo + ['qaz'] }}"    
+        
     - name: Add to inventory
       ansible.controller.host:
         name: "{{ new_fqdn }}"
