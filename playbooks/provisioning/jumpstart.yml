@@ -11,19 +11,18 @@
   #   - role: robertdebock.bootstrap
 
   tasks:
-    - name: Dump exists
-      ansible.builtin.debug:
-        var: exists_host
-
-    - name: Dump ip_valid
-      ansible.builtin.debug:
-        var: ip_valid
-
-    - name: Loop over inventory
+    - name: Loop over inventory to find all IPs assigned 
       ansible.builtin.set_fact:
         all_ips: "{{ all_ips + [item.value.dns_ip] }}"
       loop: "{{ hostitems }}"
+      loop_control:
+        label: "{{ item.key }}"
       when: item.value.dns_ip is defined
+
+    - name: Debug list of all IPs
+      ansible.builtin.debug:
+        var: all_ips
+        verbosity: 1
 
     - name: Determine if IP is available
       ansible.builtin.set_fact:
@@ -35,14 +34,6 @@
           - ip_valid != false
           - not exists_host
           - not ip_assigned
-
-    - name: Dump list
-      ansible.builtin.debug:
-        var: hostitems
-
-    - name: Print final
-      ansible.builtin.debug:
-        var: mylist
 
     # - name: Update list # TODO: Remove
     #   ansible.builtin.set_fact:
