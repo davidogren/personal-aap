@@ -2,9 +2,10 @@
   hosts: localhost
   vars:
     new_fqdn: "{{ new_hostname + '.' + new_domainname }}"
-    valid_ip: "{{ new_ip | ansible.utils.ipaddr }}" 
+    valid_ip: "{{ new_ip | ansible.utils.ipaddr }}"
     exists_host: "{{ hostvars is contains( new_fqdn ) }}"
     hostitems: "{{ hostvars | dict2items }}"
+    mylist: []
 
   # roles:
   #   - role: robertdebock.bootstrap
@@ -13,24 +14,29 @@
     - name: Assert valid IP
       ansible.builtin.debug:
         var: valid_ip
-        verbosity: 1
+        verbosity: 0
       failed_when: not valid_ip
 
     - name: Assert hostname is unique
       ansible.builtin.debug:
         var: not exists_host
-        verbosity: 1
+        verbosity: 0
       failed_when: not exists_host
 
     - name: Dump list
       ansible.builtin.debug:
         var: hostitems
 
+    - name: Loop over inventory
+      ansible.builtin.debug:
+        var: item.value.dns_ip
+      loop: hostitems
+
     - name: Dump exists
       ansible.builtin.debug:
         var: exists_host
 
-    - name: Host vars 
+    - name: Host vars
       ansible.builtin.debug:
         var: hostvars
 
@@ -39,22 +45,22 @@
         var: dns_host_list = "{{ hostitems | subelements('dns_ip', skip_missing=True) }}"
       ignore_errors: true
 
-    - name: Update list # TODO: Remove
-      ansible.builtin.set_fact:
-        new_foo: "{{ foo + ['qaz'] }}"    
+    # - name: Update list # TODO: Remove
+    #   ansible.builtin.set_fact:
+    #     new_foo: "{{ foo + ['qaz'] }}"    
         
-    - name: Add to inventory
-      ansible.controller.host:
-        name: "{{ new_fqdn }}"
-        description: "For Testing"
-        inventory: "Manual"
-        state: present
-        validate_certs: false
-        controller_host: auto.loudwalrus.com ## To fix, needs to remotely call controller
-        controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
-        controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
-        #controller_config_file: "~/tower_cli.cfg" 
-        enabled: true
-        variables:
-          dns_ip: "{{ new_ip }}"
+    # - name: Add to inventory
+    #   ansible.controller.host:
+    #     name: "{{ new_fqdn }}"
+    #     description: "For Testing"
+    #     inventory: "Manual"
+    #     state: present
+    #     validate_certs: false
+    #     controller_host: auto.loudwalrus.com ## To fix, needs to remotely call controller
+    #     controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
+    #     controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
+    #     #controller_config_file: "~/tower_cli.cfg" 
+    #     enabled: true
+    #     variables:
+    #       dns_ip: "{{ new_ip }}"
 
