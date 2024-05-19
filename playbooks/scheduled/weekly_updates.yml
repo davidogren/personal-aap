@@ -1,5 +1,9 @@
 # Experimenting with simple update playbooks
 ---
+- name: Pre Content Drift Prevention
+  ansible.builtin.import_playbook: ../includes/pre_content.yml
 - name: Configure Ansible Host
   ansible.builtin.import_playbook: ../provisioning/configure_ansiblehosts.yml
-    
+- name: Update Content
+  ansible.builtin.import_playbook: ../includes/content_update.yml
+

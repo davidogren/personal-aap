@@ -11,7 +11,7 @@
   #   - role: robertdebock.bootstrap
 
   tasks:
-    - name: Loop over inventory to find all IPs assigned 
+    - name: Loop over inventory to find all IPs assigned
       ansible.builtin.set_fact:
         all_ips: "{{ all_ips + [item.value.dns_ip] }}"
       loop: "{{ hostitems }}"
@@ -53,4 +53,3 @@
     #     enabled: true
     #     variables:
     #       dns_ip: "{{ new_ip }}"
-

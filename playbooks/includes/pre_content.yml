@@ -1,0 +1,27 @@
+# Drift prevention: standard configuration that should be in place on all
+# RHEL servers to verify the system is registered, configured, and correct
+# content is installed.
+
+- name: Pre content
+  hosts: rhelhosts
+  strategy: free
+  
+  tasks:
+    - name: 'Register system using Red Hat Subscription Manager'
+      community.general.redhat_subscription:
+        state: present
+        username: "{{ rhn_username }}"
+        password: "{{ rhn_password }}"
+        syspurpose:
+          usage: "Production"
+          role: "Red Hat Enterprise Server"
+          service_level_agreement: "Self-Support"
+      become: true
+
+    - name: Add Standard content
+      ansible.builtin.dnf:
+        name: "{{ standard_packages }}"
+        state: present #Will update in next step if necessary
+      become: true
+
+    #TODO: network config
