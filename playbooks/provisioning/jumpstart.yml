@@ -25,29 +25,18 @@
 
     - name: Add to inventory
       ansible.controller.host:
-        name: crunchy
+        name: "{{ new_fqdn }}"
+        description: "For Testing"
         inventory: "Manual"
         state: present
         validate_certs: false
-        controller_host: auto.loudwalrus.com
+        controller_host: auto.loudwalrus.com ## To fix, needs to remotely call controller
         controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
         controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
-        #controller_config_file: "~/tower_cli.cfg"
-
-
-    # - name: Add to inventory
-    #   ansible.controller.host:
-    #     name: "{{ new_fqdn }}"
-    #     description: "For Testing"
-    #     inventory: "Manual"
-    #     state: present
-    #     validate_certs: false
-    #     controller_host: localhost ## To fix, needs to remotely call controller
-    #     controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
-    #     controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
-    #     #controller_config_file: "~/tower_cli.cfg"
-    #     variables:
-    #       foo: "{{ new_ip }}"
+        #controller_config_file: "~/tower_cli.cfg" 
+        enabled: true
+        variables:
+          foo: "{{ new_ip }}"
 
 - name: Initial kickstart
   hosts: new_fqdn
