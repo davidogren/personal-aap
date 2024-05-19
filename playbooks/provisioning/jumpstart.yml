@@ -29,7 +29,7 @@
         inventory: "Manual"
         state: present
         validate_certs: false
-        controller_host: localhost
+        controller_host: auto.loudwalrus.com
         controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
         controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
         #controller_config_file: "~/tower_cli.cfg"
