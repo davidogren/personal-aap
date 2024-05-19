@@ -31,15 +31,15 @@
 
     - name: Loop over inventory
       ansible.builtin.set_fact:
-         - one_fact: foo
-         - mylist: "{{ mylist + [item.key] }}"
+        one_fact: foo
+        mylist: "{{ mylist + [item.key] }}"
       loop: "{{ hostitems }}"
 
-    - name: print one
+    - name: Print one
       ansible.builtin.debug:
-        var: foo 
+        var: foo
 
-    - name: print final
+    - name: Print final
       ansible.builtin.debug:
         var: mylist
 
