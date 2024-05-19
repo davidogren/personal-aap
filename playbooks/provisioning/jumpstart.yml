@@ -2,7 +2,7 @@
   hosts: localhost
   vars:
     new_fqdn: "{{ new_hostname + '.' + new_domainname }}"
-    valid_ip: "{{ new_ip | ansible.utils.ipaddr | bool}}"
+    valid_ip: "{{ new_ip | ansible.utils.ipaddr}}"
     exists_host: "{{ hostvars is contains( new_fqdn ) }}"
     hostitems: "{{ hostvars | dict2items }}"
     mylist: []
@@ -11,17 +11,19 @@
   #   - role: robertdebock.bootstrap
 
   tasks:
-    - name: Assert valid IP
-      ansible.builtin.debug:
-        var: valid_ip
-        verbosity: 0
-      failed_when: not valid_ip
-
-    - name: Assert hostname is unique
+    - name: Dump exists
       ansible.builtin.debug:
         var: exists_host
-        verbosity: 0
-      failed_when: exists_host
+
+    - name: Dump valid_ip`
+      ansible.builtin.debug:
+        var: valid_ip
+
+    - name: Assert host can be created
+      ansible.builtin.assert:
+        that:
+        - valid_ip == false
+        - exists_host
 
     - name: Dump list
       ansible.builtin.debug:
@@ -32,13 +34,6 @@
         msg: "ping"
       loop: "{{ hostitems }}"
 
-    - name: Dump exists
-      ansible.builtin.debug:
-        var: exists_host
-
-    - name: Host vars
-      ansible.builtin.debug:
-        var: hostvars
 
 
     # - name: Update list # TODO: Remove
