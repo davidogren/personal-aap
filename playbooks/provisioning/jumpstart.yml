@@ -2,24 +2,30 @@
   hosts: localhost
   vars:
     new_fqdn: "{{ new_hostname + '.' + new_domainname }}"
+    valid_ip: "{{ new_ip | ansible.utils.ipaddr }}" 
+    exists_host: "{{ hostvars is contains( new_fqdn ) }}"
+    hostitems: {{ hostvars | dict2items }}
 
   # roles:
   #   - role: robertdebock.bootstrap
 
   tasks:
-    - name: Verify valid IP
-      ansible.builtin.set_fact:
-        var: valid_ip = "{{ new_ip | ansible.utils.ipaddr }}" 
+    - name: Assert valid IP
+      ansible.builtin.debug:
+        var: valid_ip
+        verbosity: 1
       failed_when: not valid_ip
-      ignore_errors: true
 
-    - name: Test select
-      ansible.builtin.set_fact:
-        var: exists_host = "{{ hostvars is contains( new_fqdn ) }}"
-      failed_when: exists_host
-      register: test_select
-      ignore_errors: true
-    
+    - name: Assert hostname is unique
+      ansible.builtin.debug:
+        var: not exists_host
+        verbosity: 1
+      failed_when: not exists_host
+
+    - name: Dump list
+      ansible.builtin.debug:
+        var: hostitems
+
     - name: Dump exists
       ansible.builtin.debug:
         var: exists_host
@@ -27,10 +33,6 @@
     - name: Host vars 
       ansible.builtin.debug:
         var: hostvars
-
-    - name: Host items
-      ansible.builtin.set_fact:
-        var: hostitems = "{{ hostvars| dict2items }}"
 
     - name: Test filter
       ansible.builtin.set_fact:
