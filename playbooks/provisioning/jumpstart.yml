@@ -7,22 +7,6 @@
   #   - role: robertdebock.bootstrap
 
   tasks:
-    - name: Dump survey host
-      ansible.builtin.debug:
-        var: new_hostname
-
-    - name: Dump survey domain
-      ansible.builtin.debug:
-        var: new_domainname
-
-    - name: Dump survey ip
-      ansible.builtin.debug:
-        var: new_ip
-
-    - name: Dump FQDN
-      ansible.builtin.debug:
-        var: new_fqdn
-
     - name: Add to inventory
       ansible.controller.host:
         name: "{{ new_fqdn }}"
@@ -36,12 +20,5 @@
         #controller_config_file: "~/tower_cli.cfg" 
         enabled: true
         variables:
-          foo: "{{ new_ip }}"
+          dns_ip: "{{ new_ip }}"
 
-- name: Initial kickstart
-  hosts: new_fqdn
-
-  tasks:
-    - name: Set hostname
-      ansible.builtin.hostname:
-        name: new_hostname

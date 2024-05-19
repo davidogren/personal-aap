@@ -5,26 +5,37 @@
      
   tasks:
 
-  - name: Host vars 
-    ansible.builtin.debug:
-      var: foo
+    - name: Verify valid IP
+      ansible.builtin.set_fact:
+        var: valid_ip = "{{ new_ip | ansible.utils.ipaddr }}" 
+      failed_when: not valid_ip
+      ignore_errors: true
 
-  - name: Update list
-    ansible.builtin.set_fact:
-      new_foo: "{{ foo + ['qaz'] }}"
+    - name: Test select
+      ansible.builtin.set_fact:
+        var: exists_host = "{{ hostvars is contains('auto.loudwalrus.com') }}"
+      ignore_errors: true
+ 
+    - name: Host vars 
+      ansible.builtin.debug:
+        var: hostvars
 
-  - name: Add group
-    ansible.controller.group:
-      name: dummy
-      description: "For Testing"
-      inventory: "Manual"
-      state: present
-      validate_certs: false
-      controller_host: localhost ## To fix, needs to remotely call controller
-      controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
-      controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
-      #controller_config_file: "~/tower_cli.cfg"
-      hosts:
-        - auto.loudwalrus.com
-      variables:
-        foo: "{{ new_foo }}"
+    - name: Update list # TODO: Remove
+      ansible.builtin.set_fact:
+        new_foo: "{{ foo + ['qaz'] }}"
+
+    - name: Add group
+      ansible.controller.group:
+        name: dummy
+        description: "For Testing"
+        inventory: "Manual"
+        state: present
+        validate_certs: false
+        controller_host: localhost ## To fix, needs to remotely call controller
+        controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
+        controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
+        #controller_config_file: "~/tower_cli.cfg"
+        hosts:
+          - auto.loudwalrus.com
+        variables:
+          foo: "{{ new_foo }}"
