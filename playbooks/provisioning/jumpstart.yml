@@ -4,7 +4,7 @@
     new_fqdn: "{{ new_hostname + '.' + new_domainname }}"
     valid_ip: "{{ new_ip | ansible.utils.ipaddr }}" 
     exists_host: "{{ hostvars is contains( new_fqdn ) }}"
-    hostitems: "{{ hostvars | dict2items }}""
+    hostitems: "{{ hostvars | dict2items }}"
 
   # roles:
   #   - role: robertdebock.bootstrap
