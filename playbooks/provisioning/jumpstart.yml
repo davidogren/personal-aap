@@ -21,19 +21,20 @@
 
     - name: Loop over inventory
       ansible.builtin.set_fact:
-        mylist: "{{ all_ips + [item.value.dns_ip] }}"
+        all_ips: "{{ all_ips + [item.value.dns_ip] }}"
       loop: "{{ hostitems }}"
       when: item.value.dns_ip is defined
 
-    - name: Determine if IP is available  
+    - name: Determine if IP is available
       ansible.builtin.set_fact:
-        ip_assigned: "{{ all_ips is contains( new_ip ) }}"
+        ip_assigned: "{{ all_ips is contains(new_ip) }}"
 
     - name: Assert host can be created
       ansible.builtin.assert:
         that:
           - ip_valid != false
           - not exists_host
+          - not ip_assigned
 
     - name: Dump list
       ansible.builtin.debug:
