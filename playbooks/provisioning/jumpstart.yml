@@ -1,0 +1,30 @@
+
+- name: Config new host in inventory
+  hosts: localhost
+  vars: 
+    new_fqdn: {{ new_hostname + "." + new_domainname }}
+
+  # roles:
+  #   - role: robertdebock.bootstrap
+
+  tasks:
+    - name: Dump survey host
+      ansible.builtin.debug:
+        var: new_hostname
+
+    - name: Dump survey domain
+      ansible.builtin.debug:
+        var: new_domainname
+
+    - name: Dump survey ip
+      ansible.builtin.debug:
+        var: new_ip
+
+- name: Initial kickstart
+  hosts: new_fqdn
+
+  tasks:
+    - name: set hostname
+      ansible.builtin.hostname:
+        name: new_hostname
+        
