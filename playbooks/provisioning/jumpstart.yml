@@ -19,6 +19,16 @@
       ansible.builtin.debug:
         var: new_ip
 
+    - name: Dump FQDN
+      ansible.builtin.debug:
+        var: new_fqdn
+
+    - name: Add to inventory
+      ansible.builtin.add_host:
+        name: '{{ new_fqdn }}'
+        groups: dummy
+        foo: bar
+
 - name: Initial kickstart
   hosts: new_fqdn
 
