@@ -21,7 +21,7 @@
       ansible.builtin.reboot:
         msg: Ansible forcing reboot
         pre_reboot_delay: 0
-        reboot_timeout: 0 #We can't stick around to wait for the reboot since we will be gone
+        reboot_timeout: 0 # We can't stick around to wait for the reboot since we will be gone
       become: true
       when: needrestart_result.rc == 1
       failed_when: false # We basically have to ignore errors because we won't be around to check
