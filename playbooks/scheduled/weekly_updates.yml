@@ -1,9 +1,11 @@
-# Experimenting with simple update playbooks
+# Master playbook for weekly tasks in the maintenance window.
+# (Reboots are handled seperately)
 ---
 - name: Pre Content Drift Prevention
   ansible.builtin.import_playbook: ../includes/pre_content.yml
 - name: Configure Ansible Host
   ansible.builtin.import_playbook: ../provisioning/configure_ansiblehosts.yml
+# TODO: Move provisioning/drift prevention here
 - name: Update Content
   ansible.builtin.import_playbook: ../includes/content_update.yml
 

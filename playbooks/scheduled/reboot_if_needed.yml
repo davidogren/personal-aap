@@ -1,3 +1,6 @@
+# Because rebooting servers is (obviously) disruptive and needs to be controlled strictly
+# this functionality has been moved into seperate playbooks.
+
 - name: Reboot if needed
   hosts: rhelserver
   strategy: linear

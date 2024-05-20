@@ -1,4 +1,8 @@
-# Experimenting with simple update playbooks
+# Designed for drift prevention on Ansible Controllers
+# Unlike other similar playbooks, does not actually install AAP: too much recursive behavior down that road. 
+# 
+# Requires Loop SMB Credential
+
 ---
 - name: Configure Ansible Host
   hosts: ansiblehosts

@@ -1,6 +1,10 @@
 # Drift prevention: standard configuration that should be in place on all
 # RHEL servers to verify the system is registered, configured, and correct
 # content is installed.
+#
+# Should not be disruptive.
+#
+# Requires RHN credentials
 
 - name: Pre content
   hosts: rhelhosts

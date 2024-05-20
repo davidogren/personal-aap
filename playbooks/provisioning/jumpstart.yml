@@ -1,3 +1,11 @@
+# Takes a newly provisioned RHEL server and: 
+# * Adds it to Ansible inventory (both permanent and temporary in-memory)
+# * Makes sure Ansible can interact with that server (Python, SSH keys, etc.)
+#
+# Does not do any actual configuration of the host, which will be done via 
+# provisioning scripts specific to its function.
+# 
+
 - name: Config new host in inventory
   hosts: localhost
   vars:

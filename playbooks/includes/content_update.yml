@@ -1,14 +1,13 @@
+# Update packages on host. Could, in theory, be disruptive, so should be run off-hours
 
 - name: Update content
-  hosts: rhelservers
-  strategy: free
+  hosts: rhelhosts
+  strategy: free #ansible-lint is flagging this, we aren't using run-once so this is fine.
   tasks:
     - name: Upgrade all packages
       ansible.builtin.dnf:
         name: "*"
         state: latest
         update_only: true
-      become: true  
+      become: true
       register: dnf_taskout
-      
-   
