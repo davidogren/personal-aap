@@ -1,4 +1,4 @@
 collections:
-- community.general
-- ansible.utils
-- redhat.rhel_system_roles
+  - community.general
+  - ansible.utils
+  - redhat.rhel_system_roles
