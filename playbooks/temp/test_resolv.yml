@@ -1,0 +1,20 @@
+# Test playbook for changing DNS resolution
+- name: Test network config
+  hosts: boba.loudwalrus.com
+  gather_facts: true
+  vars:
+  - network_provider: nm
+  - network_connections:
+  - name: Wired0
+    type: ethernet
+    interface_name: eth0
+    ip:
+      dhcp4: true
+      dns_ip:
+        - 192.168.0.66
+      dns_search:
+        - loudwalrus.com
+    state: up
+    persistent_state: present
+  roles:
+    - redhat.rhel_system_roles.network
