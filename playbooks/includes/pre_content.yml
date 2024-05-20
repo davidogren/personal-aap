@@ -24,6 +24,7 @@
 
   roles:
     - role: robertdebock.core_dependencies
+      become: yes
 
   tasks:
 
