@@ -9,6 +9,7 @@
 - name: Pre content
   hosts: rhelhosts
   strategy: free
+  gather_facts: true # We gather facts because many templates that call this will cache facts
   
   pre_tasks:
     - name: 'Register system using Red Hat Subscription Manager'

@@ -5,6 +5,7 @@
   hosts: rhelserver
   strategy: linear
   serial: 1
+  gather_facts: false
 
   tasks:
     - name: Check to see if we need a reboot

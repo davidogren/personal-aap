@@ -8,6 +8,7 @@
 
 - name: Config new host in inventory
   hosts: localhost
+  gather_facts: false
   vars:
     new_fqdn: "{{ new_hostname + '.' + new_domainname }}"
     ip_valid: "{{ new_ip | ansible.utils.ipaddr}}"

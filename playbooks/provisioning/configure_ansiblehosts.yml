@@ -6,6 +6,7 @@
 ---
 - name: Configure Ansible Host
   hosts: ansiblehosts
+  gather_facts: false
   vars:
     run: false
     reboot: false

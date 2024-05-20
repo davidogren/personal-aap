@@ -3,6 +3,7 @@
 - name: Update content
   hosts: rhelhosts
   strategy: free # ansible-lint is flagging this, we aren't using run-once so this is fine.
+  gather_facts: false
   tasks:
     - name: Upgrade all packages
       ansible.builtin.dnf:

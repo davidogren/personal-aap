@@ -1,6 +1,7 @@
 ---
 - name: Daily maintainence
   hosts: all
+  gather_facts: false
 
   tasks:
     - name: Apply security updates
