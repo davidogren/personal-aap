@@ -3,18 +3,23 @@
   hosts: boba.loudwalrus.com
   gather_facts: true
   vars:
-  - network_provider: nm
-  - network_connections:
-  - name: Wired0
-    type: ethernet
-    interface_name: eth0
-    ip:
-      dhcp4: true
-      dns_ip:
-        - 192.168.0.66
-      dns_search:
-        - loudwalrus.com
-    state: up
-    persistent_state: present
+    network_provider: nm
+    network_connections:
+      - name: eth0
+        type: ethernet
+        interface_name: eth0
+        ip:
+          dhcp4: true
+          dns_ip:
+            - 192.168.0.66
+          dns_search:
+            - loudwalrus.com
+    network_state:
+      - name: eth0
+        type: ethernet
+        ipv4: 
+          enabled: true
+          dhcp: true
   roles:
-    - redhat.rhel_system_roles.network
+    - name: redhat.rhel_system_roles.network
+      become: true
