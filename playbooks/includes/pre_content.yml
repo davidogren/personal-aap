@@ -10,7 +10,7 @@
   hosts: rhelhosts
   strategy: free
   
-  tasks:
+  pre_tasks:
     - name: 'Register system using Red Hat Subscription Manager'
       community.general.redhat_subscription:
         state: present
@@ -21,6 +21,11 @@
           role: "Red Hat Enterprise Server"
           service_level_agreement: "Self-Support"
       become: true
+
+  roles:
+    - role: robertdebock.core_dependencies
+
+  tasks:
 
     - name: Add Standard content
       ansible.builtin.dnf:

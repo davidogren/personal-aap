@@ -4,9 +4,6 @@
 - name: robertdebock.dns
   src: https://github.com/robertdebock/ansible-role-dns
   version: 4.0.1
-- name: robertdebock.bootstrap
-  src: https://github.com/robertdebock/ansible-role-bootstrap
-  version: 6.2.5
 - name: robertdebock.core_dependencies
   src: https://github.com/robertdebock/ansible-role-core_dependencies
   version: 2.2.10
