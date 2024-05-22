@@ -7,7 +7,7 @@
     network_connections:
       - name: ens160
         type: ethernet
-        interface_name: eth0
+        interface_name: ens160
         ip:
           dhcp4: true
           dns:
