@@ -15,7 +15,7 @@
           dns_search:
             - loudwalrus.com
     network_state:
-      - name: eth0
+      - name: ens160
         type: ethernet
         ipv4: 
           enabled: true
