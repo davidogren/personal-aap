@@ -5,7 +5,7 @@
   vars:
     network_provider: nm
     network_connections:
-      - name: eth0
+      - name: ens160
         type: ethernet
         interface_name: eth0
         ip:
