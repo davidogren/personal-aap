@@ -7,4 +7,3 @@
 - name: robertdebock.core_dependencies
   src: https://github.com/robertdebock/ansible-role-core_dependencies
   version: 2.2.10
-- name: rhel-system-roles.rhc
