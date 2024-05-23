@@ -30,12 +30,13 @@
 
   tasks:
     - name: Add Standard content
+      become: true
       ansible.builtin.dnf:
         name: "{{ standard_packages }}"
         state: present #Will update in next step if necessary
-      become: true
 
     - name: Install RHEL web console
+      become: true
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.cockpit
       vars:
