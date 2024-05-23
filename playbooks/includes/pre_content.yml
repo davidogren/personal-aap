@@ -40,6 +40,8 @@
   handlers:
     - name: Restart cockpit
       ansible.builtin.systemd_service:
+        enabled: true
         state: restarted
         name: cockpit.socket
+      become: true
 
