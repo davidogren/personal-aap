@@ -17,6 +17,7 @@
       become: true
       register: needrestart_result
       changed_when: false
+      failed_when: false # non-zero return just indicates reboot is needed
 
     - name: Reboot Server if Necessary
       ansible.builtin.reboot:
