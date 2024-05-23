@@ -12,7 +12,7 @@
   gather_facts: true # We gather facts because many templates that call this will cache facts
   
   roles:
-    - role: rhel-system-roles.rhc 
+    - role: redhat.rhel_system_roles.rhc 
       become: yes
       vars:
         rhc_insights:
@@ -37,7 +37,7 @@
 
     - name: Install RHEL web console
       ansible.builtin.include_role:
-        name: rhel-system-roles.cockpit
+        name: rhel_system_roles.cockpit
       vars:
         cockpit_packages: default
         cockpit_manage_selinux: true
