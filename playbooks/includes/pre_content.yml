@@ -37,7 +37,7 @@
 
     - name: Install RHEL web console
       ansible.builtin.include_role:
-        name: rhel_system_roles.cockpit
+        name: redhat.rhel_system_roles.cockpit
       vars:
         cockpit_packages: default
         cockpit_manage_selinux: true
