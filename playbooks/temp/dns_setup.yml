@@ -26,7 +26,7 @@
 
     - name: Show tamplating
       ansible.builtin.debug:
-        msg: "{{ lookup('ansible.builtin.template','./dns.j2') }}"
+        msg: "{{ lookup('ansible.builtin.template','./dns_zones.j2') }}"
 
     - name: Show var
       ansible.builtin.debug:
