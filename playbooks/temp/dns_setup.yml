@@ -26,11 +26,12 @@
 
     - name: Show tamplating
       ansible.builtin.debug:
-        msg: "{{ lookup('ansible.builting.template','./dns.j2') }}"
+        msg: "{{ lookup('ansible.builtin.template','./dns.j2') }}"
 
-    - name: Show var 
+    - name: Show var
       ansible.builtin.debug:
-        var: dns_zones 
+        var: dns_zones
+
 #  roles:
 #    - role: robertdebock.core_dependencies
 #      become: true
