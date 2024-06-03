@@ -12,7 +12,7 @@
   hosts: dnshosts
   vars:
     test_var: Fred
-    dns_zones: "{{ lookup('ansible.builting.template','dns_zones.j2') }}"
+    dns_zones: "{{ lookup('ansible.builting.template', '../templates/dns_zones.j2') }}"
 
 #  pre_tasks:
 #    - name:
@@ -23,10 +23,10 @@
       ansible.builtin.debug:
         var: hostvars
 
-
-    - name: Show tamplating
+  tasks:
+    - name: Show templating
       ansible.builtin.debug:
-        msg: "{{ lookup('ansible.builtin.template','dns_zones.j2') }}"
+        msg: "{{ lookup('ansible.builtin.template', '../templates/dns_zones.j2') }}"
 
     - name: Show var
       ansible.builtin.debug:
