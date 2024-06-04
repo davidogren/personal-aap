@@ -9,6 +9,9 @@
 
 - name: WIP to configure DNS
   hosts: all #We need to run as all so that all of hostvars is populated
+  gather_facts: false
+  ignore_unreachable: true
+  strategy: free
   vars:
     test_var: Fred
     dns_zones: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') | from_yaml }}"
@@ -21,13 +24,13 @@
   pre_tasks:
     - name: Dump hostvars
       ansible.builtin.debug:
-        var: all_hostvars
+        var: hostvars
       when: inventory_hostname in groups["dnshosts"]
 
   tasks:
     - name: Show templating
       ansible.builtin.debug:
-        msg: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') }}"
+        var: dns_zones
       when: inventory_hostname in groups["dnshosts"]
 
     # - name: Show var
