@@ -12,8 +12,8 @@
   hosts: dnshosts
   vars:
     test_var: Fred
-    dns_zones: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') | to_nice_yaml }}"
-    dns_extract: "{{ dns_zones[0].name }}"
+    dns_zones: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') | from_yaml }}"
+    dns_extract: "{{ dns_zones[0] }}"
 
 #  pre_tasks:
 #    - name:
