@@ -55,5 +55,7 @@ dns_zones:
         value: "127.0.0.98"
 {% for host in dns_list %}
   - name: {{ host.key }}
+  {% if host.value is defined %}
   - foo: {{ host.value.inventory_file }}
+  {% endif %}
 {% endfor %}
