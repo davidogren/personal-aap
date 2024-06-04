@@ -1,6 +1,55 @@
-- name: localhost
-  type: primary
-  soa: localhost
-  serial: 1
-- name: crunchy
-  type: foo
+dns_allow_transfer:
+  - none
+  - "127.0.0.1"
+dns_zones:
+  - name: localhost
+    type: primary
+    soa: localhost
+    serial: 1
+    refresh: 604800
+    retry: 86400
+    expire: 2419200
+    ttl: 604800
+    records:
+      - name: "@"
+        type: NS
+        value: localhost.
+      - name: "@"
+        value: "127.0.0.1"
+      - name: "@"
+        type: AAAA
+        value: "::1"   
+  - name: "127.in-addr.arpa"
+    ttl: 604800
+    type: primary
+    records:
+      - name: "@"
+        type: NS
+        value: localhost.
+      - name: "1.0.0"
+        type: PTR
+        value: localhost.
+  - name: "0.in-addr.arpa"
+    type: primary
+    records:
+      - name: "@"
+        type: NS
+        value: localhost.
+  - name: "255.in-addr.arpa"
+    type: primary
+    records:
+      - name: "@"
+        type: NS
+        value: localhost.      
+  - name: loudwalrus.com
+    type: primary
+    ttl: 604800
+    ns:
+      - name: auto.loudwalrus.com
+    records:
+      - name: auto.loudwalrus.com
+        value: "192.0.0.66"
+      - name: boba.loudwalrus.com
+        value: "127.0.0.67"
+      - name: loop.loudwalrus.com
+        value: "127.0.0.98"

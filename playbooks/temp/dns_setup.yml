@@ -1,4 +1,4 @@
-
+---
 #- name: bootstrap  hosts
 #  hosts: dnshosts
 #  become: yes
@@ -22,7 +22,7 @@
   pre_tasks:
     - name: Dump paths
       ansible.builtin.debug:
-        var: ansible_search_path
+        var: hostvars
 
   tasks:
     - name: Show templating
