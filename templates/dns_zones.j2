@@ -54,8 +54,8 @@ dns_zones:
       - name: loop.loudwalrus.com
         value: "127.0.0.98"
 {% for host in hostvars | dict2items %}
-  {% if host.value is defined %}
+  {% if host.key is defined %}
+      {{ host.key }}
       ping
-    
   {% endif %}
 {% endfor %}
