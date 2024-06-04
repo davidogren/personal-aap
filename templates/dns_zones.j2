@@ -55,6 +55,7 @@ dns_zones:
         value: "127.0.0.98"
 {% for host in hostvars | dict2items %}
   {% if host.value is defined %}
-      - name: {{ host.key }}
+      ping
+    
   {% endif %}
 {% endfor %}
