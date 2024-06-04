@@ -53,3 +53,6 @@ dns_zones:
         value: "127.0.0.67"
       - name: loop.loudwalrus.com
         value: "127.0.0.98"
+{% for host in hostvars | dict2items %}
+      - name: {{ host.key }}
+{% endfor %}

@@ -7,9 +7,8 @@
 #  roles:
 #    - role: robertdebock.bootstrap
 
-
 - name: WIP to configure DNS
-  hosts: dnshosts
+  hosts: all #We need to run as all so that all of hostvars is populated
   vars:
     test_var: Fred
     dns_zones: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') | from_yaml }}"
@@ -22,16 +21,18 @@
   pre_tasks:
     - name: Dump hostvars
       ansible.builtin.debug:
-        var: hostvars
+        var: all_hostvars
+      when: inventory_hostname in groups["dnshosts"]
 
   tasks:
     - name: Show templating
       ansible.builtin.debug:
         msg: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') }}"
+      when: inventory_hostname in groups["dnshosts"]
 
-    - name: Show var
-      ansible.builtin.debug:
-        var: dns_extract
+    # - name: Show var
+    #   ansible.builtin.debug:
+    #     var: dns_extract
 
 #  roles:
 #    - role: robertdebock.core_dependencies
