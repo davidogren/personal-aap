@@ -13,6 +13,7 @@
   vars:
     test_var: Fred
     dns_zones: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') | to_nice_yaml }}"
+    dns_extract: "{{ dns_zones[0].name }}"
 
 #  pre_tasks:
 #    - name:
@@ -30,7 +31,7 @@
 
     - name: Show var
       ansible.builtin.debug:
-        var: dns_zones
+        var: dns_extract
 
 #  roles:
 #    - role: robertdebock.core_dependencies
