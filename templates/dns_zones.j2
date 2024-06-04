@@ -54,5 +54,5 @@ dns_zones:
       - name: loop.loudwalrus.com
         value: "127.0.0.98"
 {% for host in dns_list %}
-  - name: host.key
+  - name: { host.key }
 {% endfor %}
