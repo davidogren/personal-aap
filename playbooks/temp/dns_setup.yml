@@ -31,7 +31,7 @@
   tasks:
     - name: Show templating
       ansible.builtin.debug:
-        var: dns_list
+        msg: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') | from_yaml }}"
       when: inventory_hostname in groups["dnshosts"]
 
     # - name: Show var
