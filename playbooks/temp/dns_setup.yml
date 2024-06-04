@@ -9,7 +9,7 @@
 
 
 - name: WIP to configure DNS
-  hosts: all
+  hosts: dnshosts
   vars:
     test_var: Fred
     dns_zones: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') | from_yaml }}"
@@ -20,7 +20,7 @@
 #
 
   pre_tasks:
-    - name: Dump paths
+    - name: Dump hostvars
       ansible.builtin.debug:
         var: hostvars
 
