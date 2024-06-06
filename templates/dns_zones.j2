@@ -56,7 +56,6 @@ dns_zones:
 {% for host in dns_list %}
    
   - name: {{ host.key }}
-  {% if host.value.dns_ip is defined %}
-  - dns: {{ host.value.dns_ip | default('BONK') }}
-  {% endif %}
+  
+  - dns: {% if host.value.dns_ip is defined %} FOO {% endif %}
 {% endfor %}
