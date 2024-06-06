@@ -55,7 +55,7 @@ dns_zones:
         value: "127.0.0.98"
 {% for host in dns_list %}
 {% if host.value.dns_ip is defined %}
-      - name: host.key
+      - name: {{ host.key }}
         value: {{ host.value.dns_ip }}
 {% endif %}
 {% endfor %}
