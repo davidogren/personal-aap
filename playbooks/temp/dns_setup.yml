@@ -1,12 +1,4 @@
 ---
-#- name: bootstrap  hosts
-#  hosts: dnshosts
-#  become: yes
-#  gather_facts: no
-#
-#  roles:
-#    - role: robertdebock.bootstrap
-
 - name: WIP to configure DNS
   hosts: all #We need to run as all so that all of hostvars is populated
   gather_facts: false
@@ -15,7 +7,6 @@
   vars:
     test_var: Fred
 #    dns_zones: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') | from_yaml }}"
-    dns_extract: "{{ dns_zones[0] }}"
     dns_list: "{{ hostvars | dict2items }}"
 
 #  pre_tasks:
@@ -28,74 +19,17 @@
         var: dns_list
       when: inventory_hostname in groups["dnshosts"]
 
-  tasks:
     - name: Show templating
       ansible.builtin.debug:
         msg: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') | from_yaml }}"
       when: inventory_hostname in groups["dnshosts"]
 
-    # - name: Show var
-    #   ansible.builtin.debug:
-    #     var: dns_extract
-
-#  roles:
-#    - role: robertdebock.core_dependencies
-#      become: true
-#      # bootstrap_user: "{{ rheluser }}"
-    # - role: robertdebock.dns
-    #   become: true
-    #   dns_allow_transfer:
-    #     - none
-    #     - "127.0.0.1"
-    #   dns_zones:
-    #     - name: localhost
-    #       type: primary
-    #       soa: localhost
-    #       serial: 1
-    #       refresh: 604800
-    #       retry: 86400
-    #       expire: 2419200
-    #       ttl: 604800
-    #       records:
-    #         - name: "@"
-    #           type: NS
-    #           value: localhost.
-    #         - name: "@"
-    #           value: "127.0.0.1"
-    #         - name: "@"
-    #           type: AAAA
-    #           value: "::1"   
-    #     - name: "127.in-addr.arpa"
-    #       ttl: 604800
-    #       type: primary
-    #       records:
-    #         - name: "@"
-    #           type: NS
-    #           value: localhost.
-    #         - name: "1.0.0"
-    #           type: PTR
-    #           value: localhost.
-    #     - name: "0.in-addr.arpa"
-    #       type: primary
-    #       records:
-    #         - name: "@"
-    #           type: NS
-    #           value: localhost.
-    #     - name: "255.in-addr.arpa"
-    #       type: primary
-    #       records:
-    #         - name: "@"
-    #           type: NS
-    #           value: localhost.      
-    #     - name: loudwalrus.com
-    #       type: primary
-    #       ttl: 604800
-    #       ns:
-    #         - name: auto.loudwalrus.com
-    #       records:
-    #         - name: auto.loudwalrus.com
-    #           value: "192.0.0.66"
-    #         - name: boba
-    #           value: "127.0.0.67"
-    #         - name: loop
-    #           value: "127.0.0.98"
+  roles:
+    - role: robertdebock.dns
+      become: true
+      when: inventory_hostname in groups["dnshosts"]
+      dns_allow_transfer:
+      - none
+        "127.0.0.1"
+      dns_zones: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') | from_yaml }}"
+ 
