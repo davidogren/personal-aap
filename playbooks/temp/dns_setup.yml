@@ -1,17 +1,11 @@
 ---
 - name: WIP to configure DNS
   hosts: all #We need to run as all so that all of hostvars is populated
-  gather_facts: false
+  gather_facts: true
   ignore_unreachable: true
   strategy: free
   vars:
-    test_var: Fred
-#    dns_zones: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') | from_yaml }}"
     dns_list: "{{ hostvars | dict2items }}"
-
-#  pre_tasks:
-#    - name:
-#
 
   pre_tasks:
     - name: Dump hostvars
