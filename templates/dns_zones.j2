@@ -55,6 +55,6 @@ dns_zones:
         value: "127.0.0.98"
 {% for host in dns_list %}
   - name: {{ host.value.key }}
-  - val: {{ host.value.dns_ip is defined }}
+  - val: {{ host.value is defined }}
   - dns: {{ host.value.dns_ip | default('BONK') }}
 {% endfor %}
