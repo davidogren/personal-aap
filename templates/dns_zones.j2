@@ -54,6 +54,7 @@ dns_zones:
       - name: loop.loudwalrus.com
         value: "127.0.0.98"
 {% for host in dns_list %}
-  - name: {{ host }}
+  - name: {{ host.value.key }}
+  - val: {{ host.value.dns_ip is defined }}
   - dns: {{ host.value.dns_ip | default('BONK') }}
 {% endfor %}
