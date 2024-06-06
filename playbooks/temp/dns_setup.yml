@@ -30,6 +30,6 @@
       when: inventory_hostname in groups["dnshosts"]
       dns_allow_transfer:
         - none
-          "127.0.0.1"
+        - "127.0.0.1"
       dns_zones: "{{ lookup('ansible.builtin.template', '../../templates/dns_zones.j2') | from_yaml }}"
  
