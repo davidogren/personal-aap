@@ -1,16 +1,18 @@
-
+---
 - name: Bootstrap demo.redhat.com AAP server
   hosts: localhost
+  run_once: true
+  gather_facts: false
 
-- name: Add machine credential
-  credential:
-    name: Private GitHub
-    description: Private GitHub
-    organization: Default
-    credential_type: Source Control
-    state: present
-    no_log: true
-    inputs:
-      username: foo
-      password: {{ github_token }}
-    
+  tasks:
+    - name: Add machine credential
+      ansible.controller.credential:
+        name: Private GitHub
+        description: Private GitHub
+        organization: Default
+        credential_type: Source Control
+        state: present
+        no_log: true
+        inputs:
+          username: foo
+          password: "{{ github_token }}"
