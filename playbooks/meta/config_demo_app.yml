@@ -1,0 +1,16 @@
+
+- name: Bootstrap demo.redhat.com AAP server
+  hosts: localhost
+
+- name: Add machine credential
+  credential:
+    name: Private GitHub
+    description: Private GitHub
+    organization: Default
+    credential_type: Source Control
+    state: present
+    no_log: true
+    inputs:
+      username: foo
+      password: {{ github_token }}
+    
