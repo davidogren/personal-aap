@@ -12,7 +12,6 @@
         organization: Default
         credential_type: Source Control
         state: present
-        no_log: true
         inputs:
           username: foo
           password: "{{ github_token }}"
