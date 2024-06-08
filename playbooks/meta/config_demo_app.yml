@@ -13,7 +13,7 @@
         credential_type: Source Control
         state: present
         inputs:
-          username: foo
+          username: aap #this shouldn't matter with a PAT
           password: "{{ github_token }}"
     - name: Add Demo Project (devel)
       ansible.controller.project:
@@ -23,7 +23,7 @@
         organization: Default
         scm_type: git
         scm_url: https://github.com/davidogren/ansible-demo.git
-        scm_branch: Devel
+        scm_branch: devel
         scm_update_on_launch: true
     - name: Add Demo Project (prod)
       ansible.controller.project:
