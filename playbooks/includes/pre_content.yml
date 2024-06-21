@@ -9,6 +9,7 @@
 - name: Pre content
   hosts: rhelhosts
   strategy: free
+  ignore_unreachable: true
   gather_facts: true # We gather facts because many templates that call this will cache facts
   
   roles:

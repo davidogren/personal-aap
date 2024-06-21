@@ -1,0 +1,33 @@
+---
+- name: Bootstrap demo.redhat.com AAP server
+  hosts: localhost
+  run_once: true
+  gather_facts: false
+
+  tasks:
+    - name: Add GitHub credential
+      ansible.controller.credential:
+        name: Private GitHub
+        description: Private GitHub
+        organization: Default
+        credential_type: Source Control
+        state: present
+        inputs:
+          username: aap #this shouldn't matter with a PAT
+          password: "{{ github_token }}"
+    - name: Add Demo Project (devel)
+      ansible.controller.project:
+        name: Ansible Demo Devel
+        state: present
+        credential: Private GitHub
+        organization: Default
+        scm_type: git
+        scm_url: https://github.com/davidogren/ansible-demo.git
+        scm_branch: devel
+        scm_update_on_launch: true
+    - name: Add Demo Project (prod)
+      ansible.controller.project:
+        name: Ansible Demo Prod
+        state: present
+        copy_from: Ansible Demo Devel
+        scm_branch: main
