@@ -1,7 +1,10 @@
-# Intent is to put things in this playbook that really are "one time", even if there
-# are problems with the installation. Mostly just checking prerequisites, but we are 
-# also going to do some basic RHEL config that never needs to be rerun (unlike content
-# updates that we'd want to repeat)
+# Intent is to put things in this playbook that should/must be run before authentication
+# is properly setup.
+#
+# While everything is idempotent here, nothing here should require being re-run, even
+# if there are problems with the installation. Effectively this is a continuation of
+# bootstrapping. We check prerequisites and do some basic RHEL config.
+#
 
 - name: Ansible Preflight Checks
   hosts: localhost # We don't have DNS yet
