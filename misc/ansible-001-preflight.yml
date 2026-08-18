@@ -1,0 +1,39 @@
+- name: Ansible Preflight Checks
+  hosts: localhost # We don't have DNS yet
+  vars:
+    ansible_connection: ssh
+    aap_hostname: 'auto.loudwalrus.com'
+  become: true
+  run_once: true
+  gather_facts: true
+  tasks:
+
+    ## Requirements validation
+    - name: RHEL version Check
+      ansible.builtin.fail:
+      when: ansible_distribution != "RedHat" or ansible_distribution_major_version != "9"
+    - name: Check for a minimum of 4 CPU
+      ansible.builtin.fail:
+      when: ansible_processor_vcpus < 4
+    - name: Write debug
+      ansible.builtin.debug:
+        var: ansible_memtotal_mb
+    - name: Debug memory
+      ansible.builtin.debug:
+        var: ansible_memtotal_mb
+    - name: Check for minimum memory
+      ansible.builtin.fail:
+      when: ansible_memtotal_mb < 15500 # Found 15700 on a 16GB system so I give some leeway, 16384 would be true 16GB
+    - name: Get free space in /var
+      ansible.builtin.shell:
+        cmd: 'set -o pipefail && df -B1 --output=avail / | tail -1'
+      register: var_free
+      changed_when: false
+    - name: Check for a minimum of 60 GB in / )
+      ansible.builtin.fail:
+      when: var_free.stdout | int < 60 * 1024 * 1024 * 1024
+
+    ## Prep for using ssh
+    - name: Set hostname
+      ansible.builtin.hostname:
+        name: {{ aap_hostname }}
