@@ -13,6 +13,9 @@
   hosts: ansible27.loudwalrus.com
   vars:
     ansible_connection: ssh # ansible-core won't handle local properly
+    kernel_settings_sysctl:
+      - name: vm.swappiness
+        value: 75 # This going to be a memory contrained system
   become: true
   run_once: true
   gather_facts: true
@@ -22,7 +25,7 @@
 ## Content
     - name: Add Standard content
       ansible.builtin.dnf:
-        name: "ansible-core,git-core,sysstat,kpatch,kpatch-dnf"
+        name: "ansible-core,git-core,sysstat,kpatch,kpatch-dnf,rhel-system-roles"
         state: present
 
     - name: Ensure kpatch systemd service is enabled and started
@@ -54,6 +57,10 @@
         name: "*"
         state: latest
         update_only: true
+
+    - name: Apply kernel settings
+      ansible.builtin.include_role:
+        name: redhat.rhel_system_roles.kernel_settings
         
  ## Reboot if needed       
     - name: Check to see if we need a reboot
