@@ -22,7 +22,7 @@
 ## Content
     - name: Add Standard content
       ansible.builtin.dnf:
-        name: "ansible-core,git-core,sysstat,kpatch"
+        name: "ansible-core,git-core,sysstat,kpatch,kpatch-dnf"
         state: present
 
     - name: Ensure kpatch systemd service is enabled and started
@@ -31,18 +31,11 @@
         enabled: true
         state: started
 
-    - name: Install latest cumulative kpatch package for running kernel
-      ansible.builtin.dnf:
-        name: "kpatch-patch-{{ ansible_kernel | regex_replace('\\.', '_') | regex_replace('-', '_') }}"
-        state: latest
-      ignore_errors: true  # Prevents failure if no live patch currently exists for this kernel
-
     - name: Update all packages
       ansible.builtin.dnf:
         name: "*"
         state: latest
         update_only: true
-        
 
  ## Reboot if needed       
     - name: Check to see if we need a reboot
@@ -58,3 +51,13 @@
         pre_reboot_delay: 3
       become: true
       when: needrestart_result.rc == 1
+
+## We don't do this until after reboot because if we changed kernel ansible_kernel wouldn't be right
+## Obviously we won't get here if it rebooted
+    - name: Install latest cumulative kpatch package for running kernel
+      ansible.builtin.dnf:
+        name: "kpatch-patch-{{ ansible_kernel | regex_replace('\\.', '_') | regex_replace('-', '_') }}"
+        state: latest
+      ignore_errors: true  # Prevents failure if no live patch currently exists for this kernel
+
+
