@@ -24,9 +24,6 @@
     - name: Check for a minimum of 4 CPU
       ansible.builtin.fail:
       when: ansible_processor_vcpus < 4
-    - name: Write debug
-      ansible.builtin.debug:
-        var: ansible_memtotal_mb
     - name: Debug memory
       ansible.builtin.debug:
         var: ansible_memtotal_mb
