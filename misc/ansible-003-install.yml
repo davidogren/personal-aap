@@ -3,7 +3,7 @@
   hosts: ansible27.loudwalrus.com
   vars:
     ansible_connection: ssh # ansible-core won't handle local properly
-    ansible_version: "2.7-4"
+    aap_version: "2.7-4"
     ansible_installer_dir: "/mnt/sync/ansible"
   become: true
   run_once: true
@@ -13,8 +13,8 @@
 
     - name: Copy and extract AAP installer
       ansible.builtin.unarchive:
-        src: "{{ ansible_installer_dir }}/ansible-automation-platform-containerized-setup-{{ ansible_version }}.tar.gz"
-        creates: "/home/ansible/ansible-automation-platform-containerized-setup-{{ ansible_version }}"
+        src: "{{ ansible_installer_dir }}/ansible-automation-platform-containerized-setup-{{ aap_version }}.tar.gz"
+        creates: "/home/ansible/ansible-automation-platform-containerized-setup-{{ aap_version }}"
         remote_src: true
         dest: /home/ansible
         owner: ansible
@@ -24,7 +24,7 @@
       ansible.builtin.copy:
         src: /mnt/loop/ansible/satellite/inventory-growth-custom
         remote_src: true
-        dest: "/home/ansible/ansible-automation-platform-containerized-setup-{{ ansible_version }}/inventory"
+        dest: "/home/ansible/ansible-automation-platform-containerized-setup-{{ aap_version }}/inventory"
         owner: ansible
         group: ansible
         mode: '0644'
@@ -37,7 +37,7 @@
 
     - name: Run containerized install
       ansible.builtin.command:
-        chdir: "/home/ansible/ansible-automation-platform-containerized-setup-{{ ansible_version }}"
+        chdir: "/home/ansible/ansible-automation-platform-containerized-setup-{{ aap_version }}"
         argv:
           - ansible-playbook
           - -i
