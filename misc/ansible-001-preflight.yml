@@ -83,21 +83,21 @@
 #   This config will specify our non default SSH keys for the local servers
 #   Note that since these are still going to be CLI playbooks we can't use templates
     - name: Copy config
-          ansible.builtin.copy:
-            src: "{{ src_dir }}/config"
-            dest: "/home/{{ item.0 }}/.ssh"
-            owner: "{{ item }}"
-            group: "{{ item }}"
-            mode: '0600'
-          loop: "{{ target_users }}"      
+      ansible.builtin.copy:
+        src: "{{ src_dir }}/config"
+        dest: "/home/{{ item.0 }}/.ssh"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0600'
+      loop: "{{ target_users }}"      
 
     - name: Copy secret key
-          ansible.builtin.copy:
-            src: "{{ src_dir }}/ig_ogren_homelab"
-            dest: "/home/{{ item.0 }}/.ssh"
-            owner: "{{ item }}"
-            group: "{{ item }}"
-            mode: '0600'
-          loop: "{{ target_users }}"      
+      ansible.builtin.copy:
+        src: "{{ src_dir }}/id_ogren_homelab"
+        dest: "/home/{{ item.0 }}/.ssh"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0600'
+      loop: "{{ target_users }}"      
         
 
