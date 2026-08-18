@@ -22,7 +22,7 @@
         mode: '0744'
     - name: Copy inventory file # TODO: template this a bit
       ansible.builtin.copy:
-        src: /mnt/loop/ansible/satellite/inventory-growth-custom
+        src: /mnt/sync/ansible/ansible27/inventory-growth-custom
         remote_src: true
         dest: "/home/ansible/ansible-automation-platform-containerized-setup-{{ aap_version }}/inventory"
         owner: ansible
