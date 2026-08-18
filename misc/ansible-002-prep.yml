@@ -63,11 +63,6 @@
       failed_when: false # non-zero return just indicates reboot is needed
       changed_when: false
 
-    - name: debug restart
-      ansible.builtin.debug:
-        var: needrestart_result
-    
-
     - name: Reboot Server if Necessary
       ansible.builtin.reboot:
         msg: Ansible forcing reboot
