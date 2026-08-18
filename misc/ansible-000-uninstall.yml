@@ -1,5 +1,5 @@
 - name: Ansible Uninstall
-  hosts: 'auto.loudwalrus.com'
+  hosts: 'ansible27.loudwalrus.com'
   vars:
     ansible_connection: ssh
     aap_version: "2.7-4"
