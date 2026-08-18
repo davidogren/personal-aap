@@ -1,7 +1,12 @@
 # Intent is to put things in this playbook that should be run before every install
 # attempt (but not the install)
 #
-# Because we are updating content
+# Because we are updating content this may reboot
+#
+# Remember that because this forces ssh and we don't have inventory we must provide
+# it to ansible-playbook (and use a trailing comma so that it knows it's not a file)
+#
+# ansible-playbook --check -i "ansible27.loudwalrus.com," ~/personal-aap/misc/ansible-002-prep.yml 
 
 ---
 - name: Ansible Final System Prep
