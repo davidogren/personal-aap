@@ -4,6 +4,7 @@
   vars:
     ansible_connection: ssh # ansible-core won't handle local properly
     ansible_version: "2.7-4"
+    ansible_installer_dir = "/mnt/sync/ansible/"
   become: true
   run_once: true
   gather_facts: true
@@ -12,7 +13,7 @@
 
     - name: Copy and extract AAP installer
       ansible.builtin.unarchive:
-        src: "/mnt/loop/ansible/ansible-automation-platform-containerized-setup-{{ ansible_version }}.tar.gz"
+        src: "{{ ansible_installer_dir }}/ansible-automation-platform-containerized-setup-{{ ansible_version }}.tar.gz"
         creates: "/home/ansible/ansible-automation-platform-containerized-setup-{{ ansible_version }}"
         remote_src: true
         dest: /home/ansible
