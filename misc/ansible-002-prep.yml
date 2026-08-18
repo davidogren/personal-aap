@@ -47,7 +47,7 @@
       ansible.builtin.command:
         cmd: dnf kpatch auto
       register: kpatch_auto
-      changed_when: "'enabled' in kpatch_auto.stdout"
+      changed_when: not "'Nothing' in kpatch_auto.stdout"
 
     - name: Update all packages
       ansible.builtin.dnf:
