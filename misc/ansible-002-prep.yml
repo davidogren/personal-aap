@@ -1,84 +1,44 @@
+# Intent is to put things in this playbook that should be run before every install
+# attempt (but not the install)
+#
+# Because we are updating content
+
 ---
 - name: Ansible Final System Prep
   hosts: auto.loudwalrus.com
   vars:
     ansible_connection: ssh # ansible-core won't handle local properly
-    key_src_dir: "/mnt/sync/ansible/ssh_keys"
-    target_users:
-      - ogren
-      - ansible
   become: true
   run_once: true
   gather_facts: true
 
   tasks:
 
+## Content
     - name: Add Standard content
       ansible.builtin.dnf:
-        name: "ansible-core,git-core,sysstat"
+        name: "ansible-core,git-core,sysstat,kpatch"
         state: present
 
-## Final content updates
+    - name: Ensure kpatch systemd service is enabled and started
+      ansible.builtin.systemd:
+        name: kpatch
+        enabled: true
+        state: started
+
+    - name: Install latest cumulative kpatch package for running kernel
+      ansible.builtin.dnf:
+        name: "kpatch-patch-{{ ansible_kernel | regex_replace('\\.', '_') | regex_replace('-', '_') }}"
+        state: latest
+      ignore_errors: true  # Prevents failure if no live patch currently exists for this kernel
+
     - name: Update all packages
       ansible.builtin.dnf:
         name: "*"
         state: latest
         update_only: true
-
-## Other Config
-    - name: Add Ansible user
-      ansible.builtin.user:
-        state: present
-        name: ansible
-        password_lock: true
-        generate_ssh_key: false
-    - name: Add ansible user to sudoers
-      ansible.builtin.lineinfile:
-        state: present
-        path: /etc/sudoers
-        line: 'ansible ALL=(ALL:ALL) NOPASSWD:ALL'
-        insertafter: '## Allow root to run any commands anywhere'
-        validate: 'visudo -cf %s'
         
-## Passwordless login setup (both so that we can passwordless login and so others can login to us)
 
-    - name: Ensure .ssh directory exists for users
-          ansible.builtin.file:
-            path: "/home/{{ item }}/.ssh"
-            state: directory
-            owner: "{{ item }}"
-            group: "{{ item }}"
-            mode: '0700'
-          loop: "{{ target_users }}"        
-    
-    - name: Copy authorized_keys
-          ansible.builtin.copy:
-            src: "{{ src_dir }}/authorized_keys"
-            dest: "/home/{{ item }}/.ssh"
-            owner: "{{ item }}"
-            group: "{{ item }}"
-            mode: '0600'
-          loop: "{{ target_users }}"      
-
-    - name: Copy config
-          ansible.builtin.copy:
-            src: "{{ src_dir }}/config"
-            dest: "/home/{{ item.0 }}/.ssh"
-            owner: "{{ item }}"
-            group: "{{ item }}"
-            mode: '0600'
-          loop: "{{ target_users }}"      
-
-    - name: Copy secret key
-          ansible.builtin.copy:
-            src: "{{ src_dir }}/ig_ogren_homelab"
-            dest: "/home/{{ item.0 }}/.ssh"
-            owner: "{{ item }}"
-            group: "{{ item }}"
-            mode: '0600'
-          loop: "{{ target_users }}"      
-
-      
  ## Reboot if needed       
     - name: Check to see if we need a reboot
       ansible.builtin.command: needs-restarting -r
