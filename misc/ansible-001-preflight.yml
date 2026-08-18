@@ -1,8 +1,8 @@
 - name: Ansible Preflight Checks
   hosts: localhost # We don't have DNS yet
   vars:
-    ansible_connection: ssh
-    aap_hostname: 'auto.loudwalrus.com'
+    ansible_connection: local
+    aap_hostname: 'ansible27.loudwalrus.com'
   become: true
   run_once: true
   gather_facts: true
@@ -36,4 +36,4 @@
     ## Prep for using ssh
     - name: Set hostname
       ansible.builtin.hostname:
-        name: {{ aap_hostname }}
+        name: "{{ aap_hostname }}"
