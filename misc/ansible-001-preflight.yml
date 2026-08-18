@@ -54,13 +54,15 @@
         name: ansible
         password_lock: true
         generate_ssh_key: false
+
     - name: Add ansible user to sudoers
       ansible.builtin.lineinfile:
         state: present
         path: /etc/sudoers
-        line: 'ansible ALL=(ALL:ALL) NOPASSWD:ALL'
-        insertafter: '## Allow root to run any commands anywhere'
+        line: "{{ item }} ALL=(ALL:ALL) NOPASSWD:ALL"
+        insertafter: '%wheel	ALL=(ALL)	ALL'
         validate: 'visudo -cf %s'
+      loop: "{{ target_users }}"        
 
     - name: Ensure .ssh directory exists for users
       ansible.builtin.file:
@@ -69,7 +71,6 @@
         owner: "{{ item }}"
         group: "{{ item }}"
         mode: '0700'
-      loop: "{{ target_users }}"        
     
     - name: Copy authorized_keys
       ansible.builtin.copy:
