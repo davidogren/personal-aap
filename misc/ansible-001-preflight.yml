@@ -72,7 +72,7 @@
   
     - name: Copy authorized_keys
       ansible.builtin.copy:
-        src: "{{ src_dir }}/authorized_keys"
+        src: "{{ key_src_dir }}/authorized_keys"
         dest: "/home/{{ item }}/.ssh"
         owner: "{{ item }}"
         group: "{{ item }}"
@@ -83,7 +83,7 @@
 #   Note that since these are still going to be CLI playbooks we can't use templates
     - name: Copy config
       ansible.builtin.copy:
-        src: "{{ src_dir }}/config"
+        src: "{{ key_src_dir }}/config"
         dest: "/home/{{ item.0 }}/.ssh"
         owner: "{{ item }}"
         group: "{{ item }}"
@@ -92,7 +92,7 @@
 
     - name: Copy secret key
       ansible.builtin.copy:
-        src: "{{ src_dir }}/id_ogren_homelab"
+        src: "{{ key_src_dir }}/id_ogren_homelab"
         dest: "/home/{{ item.0 }}/.ssh"
         owner: "{{ item }}"
         group: "{{ item }}"
