@@ -4,7 +4,7 @@
   vars:
     ansible_connection: ssh # ansible-core won't handle local properly
     ansible_version: "2.7-4"
-    ansible_installer_dir: "/mnt/sync/ansible/"
+    ansible_installer_dir: "/mnt/sync/ansible"
   become: true
   run_once: true
   gather_facts: true
