@@ -68,7 +68,8 @@
         owner: "{{ item }}"
         group: "{{ item }}"
         mode: '0700'
-    
+      loop: "{{ target_users }}"        
+  
     - name: Copy authorized_keys
       ansible.builtin.copy:
         src: "{{ src_dir }}/authorized_keys"
