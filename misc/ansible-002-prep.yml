@@ -28,6 +28,12 @@
         name: "ansible-core,git-core,sysstat,kpatch,kpatch-dnf,rhel-system-roles"
         state: present
 
+    - name: Add Ansible Builder
+      ansible.builtin.dnf:
+        name: "ansible-builder"
+        enablerepo: ansible-automation-platform-2.7-for-rhel-9-x86_64-rpms
+        state: present
+
     - name: Ensure kpatch systemd service is enabled and started
       ansible.builtin.systemd:
         name: kpatch
