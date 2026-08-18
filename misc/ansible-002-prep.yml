@@ -5,7 +5,7 @@
 
 ---
 - name: Ansible Final System Prep
-  hosts: auto.loudwalrus.com
+  hosts: ansible27.loudwalrus.com
   vars:
     ansible_connection: ssh # ansible-core won't handle local properly
   become: true
