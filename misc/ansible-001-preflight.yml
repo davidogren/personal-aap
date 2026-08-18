@@ -84,7 +84,7 @@
     - name: Copy config
       ansible.builtin.copy:
         src: "{{ key_src_dir }}/config"
-        dest: "/home/{{ item.0 }}/.ssh"
+        dest: "/home/{{ item }}/.ssh"
         owner: "{{ item }}"
         group: "{{ item }}"
         mode: '0600'
@@ -93,7 +93,7 @@
     - name: Copy secret key
       ansible.builtin.copy:
         src: "{{ key_src_dir }}/id_ogren_homelab"
-        dest: "/home/{{ item.0 }}/.ssh"
+        dest: "/home/{{ item }}/.ssh"
         owner: "{{ item }}"
         group: "{{ item }}"
         mode: '0600'
