@@ -1,0 +1,22 @@
+- name: Ansible Uninstall
+  hosts: 'auto.loudwalrus.com'
+  vars:
+    ansible_connection: ssh
+    aap_version: "2.7-4"
+  become: true
+  run_once: true
+  gather_facts: true
+  tasks:
+
+## Ansible Install
+    - name: Run containerized uninstall
+      ansible.builtin.command:
+        chdir: "/home/ansible/ansible-automation-platform-containerized-setup-{{aap_version}}"
+        argv:
+          - ansible-playbook
+          - -i
+          - inventory
+          - ansible.containerized_installer.uninstall
+      become: true # TODO: is this needed?
+      become_user: ansible
+      changed_when: true

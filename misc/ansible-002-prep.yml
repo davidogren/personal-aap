@@ -15,7 +15,7 @@
     ansible_connection: ssh # ansible-core won't handle local properly
     kernel_settings_sysctl:
       - name: vm.swappiness
-        value: 75 # This going to be a memory contrained system
+        value: 75 # This going to be a memory constrained system
   become: true
   run_once: true
   gather_facts: true
