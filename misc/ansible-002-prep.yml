@@ -31,12 +31,30 @@
         enabled: true
         state: started
 
+    - name: Enable package filtering to restrict updates to kpatch-supported kernels
+      ansible.builtin.command:
+        cmd: dnf kpatch auto-filter
+      register: kpatch_filter
+      changed_when: "'enabled' in kpatch_filter.stdout"
+
     - name: Update all packages
       ansible.builtin.dnf:
         name: "*"
         state: latest
         update_only: true
+ 
+    - name: Enable automatic subscription to kernel live patch streams
+      ansible.builtin.command:
+        cmd: dnf kpatch auto
+      register: kpatch_auto
+      changed_when: "'enabled' in kpatch_auto.stdout"
 
+    - name: Update all packages
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+        update_only: true
+        
  ## Reboot if needed       
     - name: Check to see if we need a reboot
       ansible.builtin.command: "dnf needs-restarting -r"
@@ -56,13 +74,4 @@
         pre_reboot_delay: 3
       become: true
       when: needrestart_result.rc == 1
-
-## We don't do this until after reboot because if we changed kernel ansible_kernel wouldn't be right
-## Obviously we won't get here if it rebooted
-    - name: Install latest cumulative kpatch package for running kernel
-      ansible.builtin.dnf:
-        name: "kpatch-patch-{{ ansible_kernel | regex_replace('\\.', '_') | regex_replace('-', '_') }}"
-        state: latest
-      ignore_errors: true  # Prevents failure if no live patch currently exists for this kernel
-
 
