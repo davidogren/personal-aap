@@ -48,37 +48,37 @@
         name: "{{ aap_hostname }}"
         
     ## Other Config
-        - name: Add Ansible user
-          ansible.builtin.user:
-            state: present
-            name: ansible
-            password_lock: true
-            generate_ssh_key: false
-        - name: Add ansible user to sudoers
-          ansible.builtin.lineinfile:
-            state: present
-            path: /etc/sudoers
-            line: 'ansible ALL=(ALL:ALL) NOPASSWD:ALL'
-            insertafter: '## Allow root to run any commands anywhere'
-            validate: 'visudo -cf %s'
+    - name: Add Ansible user
+      ansible.builtin.user:
+        state: present
+        name: ansible
+        password_lock: true
+        generate_ssh_key: false
+    - name: Add ansible user to sudoers
+      ansible.builtin.lineinfile:
+        state: present
+        path: /etc/sudoers
+        line: 'ansible ALL=(ALL:ALL) NOPASSWD:ALL'
+        insertafter: '## Allow root to run any commands anywhere'
+        validate: 'visudo -cf %s'
 
     - name: Ensure .ssh directory exists for users
-          ansible.builtin.file:
-            path: "/home/{{ item }}/.ssh"
-            state: directory
-            owner: "{{ item }}"
-            group: "{{ item }}"
-            mode: '0700'
-          loop: "{{ target_users }}"        
+      ansible.builtin.file:
+        path: "/home/{{ item }}/.ssh"
+        state: directory
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0700'
+      loop: "{{ target_users }}"        
     
     - name: Copy authorized_keys
-          ansible.builtin.copy:
-            src: "{{ src_dir }}/authorized_keys"
-            dest: "/home/{{ item }}/.ssh"
-            owner: "{{ item }}"
-            group: "{{ item }}"
-            mode: '0600'
-          loop: "{{ target_users }}"      
+      ansible.builtin.copy:
+        src: "{{ src_dir }}/authorized_keys"
+        dest: "/home/{{ item }}/.ssh"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0600'
+      loop: "{{ target_users }}"      
 
 #   This config will specify our non default SSH keys for the local servers
 #   Note that since these are still going to be CLI playbooks we can't use templates
