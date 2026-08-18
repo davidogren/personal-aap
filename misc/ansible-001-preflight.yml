@@ -1,8 +1,17 @@
+# Intent is to put things in this playbook that really are "one time", even if there
+# are problems with the installation. Mostly just checking prerequisites, but we are 
+# also going to do some basic RHEL config that never needs to be rerun (unlike content
+# updates that we'd want to repeat)
+
 - name: Ansible Preflight Checks
   hosts: localhost # We don't have DNS yet
   vars:
     ansible_connection: local
     aap_hostname: 'ansible27.loudwalrus.com'
+    key_src_dir: "/mnt/sync/ansible/ssh_keys"
+    target_users:
+      - ogren
+      - ansible
   become: true
   run_once: true
   gather_facts: true
@@ -37,3 +46,58 @@
     - name: Set hostname
       ansible.builtin.hostname:
         name: "{{ aap_hostname }}"
+        
+    ## Other Config
+        - name: Add Ansible user
+          ansible.builtin.user:
+            state: present
+            name: ansible
+            password_lock: true
+            generate_ssh_key: false
+        - name: Add ansible user to sudoers
+          ansible.builtin.lineinfile:
+            state: present
+            path: /etc/sudoers
+            line: 'ansible ALL=(ALL:ALL) NOPASSWD:ALL'
+            insertafter: '## Allow root to run any commands anywhere'
+            validate: 'visudo -cf %s'
+
+    - name: Ensure .ssh directory exists for users
+          ansible.builtin.file:
+            path: "/home/{{ item }}/.ssh"
+            state: directory
+            owner: "{{ item }}"
+            group: "{{ item }}"
+            mode: '0700'
+          loop: "{{ target_users }}"        
+    
+    - name: Copy authorized_keys
+          ansible.builtin.copy:
+            src: "{{ src_dir }}/authorized_keys"
+            dest: "/home/{{ item }}/.ssh"
+            owner: "{{ item }}"
+            group: "{{ item }}"
+            mode: '0600'
+          loop: "{{ target_users }}"      
+
+#   This config will specify our non default SSH keys for the local servers
+#   Note that since these are still going to be CLI playbooks we can't use templates
+    - name: Copy config
+          ansible.builtin.copy:
+            src: "{{ src_dir }}/config"
+            dest: "/home/{{ item.0 }}/.ssh"
+            owner: "{{ item }}"
+            group: "{{ item }}"
+            mode: '0600'
+          loop: "{{ target_users }}"      
+
+    - name: Copy secret key
+          ansible.builtin.copy:
+            src: "{{ src_dir }}/ig_ogren_homelab"
+            dest: "/home/{{ item.0 }}/.ssh"
+            owner: "{{ item }}"
+            group: "{{ item }}"
+            mode: '0600'
+          loop: "{{ target_users }}"      
+        
+
