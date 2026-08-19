@@ -1,0 +1,26 @@
+---
+- name: Build RHEL 10 BootC Image
+  hosts: localhost # Change this to your target host/group
+  tasks:
+    - name: Use Builder Image
+      containers.podman.podman_container:
+        name: rhel9-bootc-builder
+        image: registry.redhat.io/rhel9/bootc-image-builder:latest
+        rm: true
+        interactive: true
+        tty: true
+        privileged: true
+        # Setting detach to false ensures Ansible waits for the build to finish
+        detach: false
+        security_opt:
+          - label=type:unconfined_t
+        volume:
+          - /var/lib/containers/storage:/var/lib/containers/storage:Z
+          - /home/ogren/images/start/config.toml:/config.toml:Z
+          - /var/output:/output:Z
+        command:
+          - --type
+          - qcow2
+          - --config
+          - /config.toml
+          - satellite.loudwalrus.com/loudwalrus/test/rhel10_image_test/rhel10_image_mode_test/isdemo:1.1
