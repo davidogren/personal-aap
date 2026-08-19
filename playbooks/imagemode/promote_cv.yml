@@ -19,4 +19,4 @@
         content_view: "rhel9_imagemode"
         # By omitting the 'version' parameter, the module defaults to the latest version
         lifecycle_environments:
-          - Test
+          - test
