@@ -8,11 +8,21 @@
 #    - name: Stage new image
 #      community.general.bootc_manage:
 #        state: latest
-   - name: Stage new image
+
+   ## Log the bootc status before the update
+   - name: Get bootc Status
      ansible.builtin.command:
        cmd: "bootc status"
      register: bootc_status
      become: true
-   - name: Show output
+   - name: Log output
      ansible.builtin.debug:
        var: bootc_status
+   - name: Update bootc image and reboot
+     ansible.builtin.command:
+       cmd: "bootc update --apply"
+     register: bootc_apply
+     become: true
+   - name: Log update output
+     ansible.builtin.debug:
+       var: bootc_apply
