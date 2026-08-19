@@ -12,6 +12,7 @@
      ansible.builtin.command:
        cmd: "bootc status"
      register: bootc_status
+     become: true
    - name: Show output
      ansible.builtin.debug:
        var: bootc_status
