@@ -24,7 +24,7 @@
        cmd: "bootc update --apply"
      register: bootc_apply
      become: true
-    changed_when: "'No changes in.' not in bootc_apply.stdout"
+     changed_when: "'No changes in.' not in bootc_apply.stdout"
    - name: Log update output
      ansible.builtin.debug:
        var: bootc_apply
