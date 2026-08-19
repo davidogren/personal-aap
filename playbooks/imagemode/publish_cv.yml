@@ -15,7 +15,7 @@
   tasks:
     - name: Publish a new version of a Content View
       redhat.satellite.content_view_version:
-        server_url: "satellite.loudwalrus.com"
+        server_url: "http://satellite.loudwalrus.com"
         username: "{{ satellite_user }}" # Credentials from 'Red Hat Satellite' credential type
         password: "{{ satellite_password }}"
         validate_certs: true
