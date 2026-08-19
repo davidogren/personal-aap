@@ -30,7 +30,8 @@
       containers.podman.podman_image:
         name: "{{ image_name }}"
         tag: "{{ image_tag }}"
-        # 'path' tells Podman where the build context and Containerfile are located
+        path: "{{ build_dir }}"
         path: "{{ repo_dir }}"
         # Automatically pushes the image to the registry after a successful build
+        become: ogren
         push: true
