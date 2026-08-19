@@ -20,6 +20,6 @@
         password: "{{ satellite_password }}"
         validate_certs: true
         organization: "{{ org }}"
-        content_view: "{{ rhel_imagemode }}"
+        content_view: "{{ cv_name }}"
         description: "Published via Ansible Automation"
         state: present
