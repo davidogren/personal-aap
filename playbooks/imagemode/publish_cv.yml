@@ -13,7 +13,7 @@
     image_tag: "1.1"
 
   tasks:
-  - name: Publish a new version of a Content View
+    - name: Publish a new version of a Content View
       redhat.satellite.content_view_version:
         server_url: "satellite.loudwalrus.com"
         username: "{{ satellite_user }}" # Credentials from 'Red Hat Satellite' credential type
