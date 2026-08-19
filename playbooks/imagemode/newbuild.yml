@@ -2,7 +2,7 @@
 - name: Build new imagemode container
   hosts: satellite.loudwalrus.com
   remote_user: ogren
-  gather_facts: true
+  gather_facts: false
   vars:
     # Set this to the absolute path of your existing git repository
     build_dir: "/home/ogren/images/start"

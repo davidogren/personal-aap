@@ -1,6 +1,7 @@
 ---
 - name: Update image mode hosts in test lifecycle
-  hosts: imagemode_test_hosts 
+  hosts: imagemode_test_hosts
+  remote_user: ogren
   tasks:
 
 # Ansible module doesn't yet support soft reboot, so I will use raw command 

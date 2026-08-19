@@ -1,6 +1,7 @@
 ---
 - name: Build RHEL 10 BootC Image
   hosts: localhost # Change this to your target host/group
+  remote_user: ogren
   tasks:
     - name: Use Builder Image
       containers.podman.podman_container:
