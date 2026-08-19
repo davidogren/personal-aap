@@ -1,0 +1,36 @@
+---
+- name: Build new imagemode container
+  hosts: satellite.loudwalrus.com
+  gather_facts: true
+  vars:
+    # Set this to the absolute path of your existing git repository
+    build_dir: "/home/ogren/images/start"
+    
+    # Image details
+    image_name: "satellite.loudwalrus.com/loudwalrus/rhel9_imagemode_demo/isdemo"
+    image_tag: "1.1"
+
+  tasks:
+    - name: Pull the latest changes from origin
+      ansible.builtin.command: git pull
+      args:
+        chdir: "{{ repo_dir }}"
+      register: git_pull
+      become: ogren
+      changed_when: "'Already up to date.' not in git_pull.stdout"
+
+    # Uncomment and configure this block if you need to authenticate to your registry first
+    # - name: Log into the Satellite registry
+    #   containers.podman.podman_login:
+    #     registry: satellite.loudwalrus.com
+    #     username: "{{ registry_user }}"
+    #     password: "{{ registry_password }}"
+
+    - name: Build and push the Podman image
+      containers.podman.podman_image:
+        name: "{{ image_name }}"
+        tag: "{{ image_tag }}"
+        # 'path' tells Podman where the build context and Containerfile are located
+        path: "{{ repo_dir }}"
+        # Automatically pushes the image to the registry after a successful build
+        push: true
