@@ -1,6 +1,7 @@
 ---
 - name: Build new imagemode container
   hosts: satellite.loudwalrus.com
+  remote_user: ogren
   gather_facts: true
   vars:
     # Set this to the absolute path of your existing git repository
@@ -16,7 +17,6 @@
       args:
         chdir: "{{ repo_dir }}"
       register: git_pull
-      become: ogren
       changed_when: "'Already up to date.' not in git_pull.stdout"
 
     # Uncomment and configure this block if you need to authenticate to your registry first
@@ -33,5 +33,4 @@
         path: "{{ build_dir }}"
         path: "{{ repo_dir }}"
         # Automatically pushes the image to the registry after a successful build
-        become: ogren
         push: true
