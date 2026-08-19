@@ -2,3 +2,4 @@ collections:
   - community.general
   - ansible.utils
   - redhat.rhel_system_roles
+  - containers.podman
