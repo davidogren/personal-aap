@@ -15,7 +15,7 @@
     - name: Pull the latest changes from origin
       ansible.builtin.command: git pull
       args:
-        chdir: "{{ repo_dir }}"
+        chdir: "{{ build_dir }}"
       register: git_pull
       changed_when: "'Already up to date.' not in git_pull.stdout"
 
