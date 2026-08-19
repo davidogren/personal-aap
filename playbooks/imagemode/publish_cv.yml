@@ -18,7 +18,7 @@
         server_url: "http://satellite.loudwalrus.com"
         username: "{{ satellite_user }}" # Credentials from 'Red Hat Satellite' credential type
         password: "{{ satellite_password }}"
-        validate_certs: true
+        validate_certs: false
         organization: "{{ org }}"
         content_view: "{{ cv_name }}"
         description: "Published via Ansible Automation"
