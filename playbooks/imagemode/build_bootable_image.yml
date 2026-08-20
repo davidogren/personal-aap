@@ -24,4 +24,4 @@
           - qcow2
           - --config
           - /config.toml
-          - satellite.loudwalrus.com/loudwalrus/test/rhel10_image_test/rhel10_image_mode_test/isdemo:1.1
+          - satellite.loudwalrus.com/loudwalrus/test/rhel9_image_test/rhel9_image_mode_test/isdemo:1.1
