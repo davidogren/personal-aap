@@ -19,12 +19,11 @@
       register: git_pull
       changed_when: "'Already up to date.' not in git_pull.stdout"
 
-    # Uncomment and configure this block if you need to authenticate to your registry first
     # - name: Log into the Satellite registry
     #   containers.podman.podman_login:
     #     registry: satellite.loudwalrus.com
-    #     username: "{{ registry_user }}"
-    #     password: "{{ registry_password }}"
+    #     username: "{{ satellite_user }}" #can get from Satellite credential
+    #     password: "{{ satellite_password }}"
 
     - name: Build and push the Podman image
       containers.podman.podman_image:
