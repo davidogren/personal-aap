@@ -1,0 +1,25 @@
+---
+- name: Publish new CV version
+  hosts: satellite.loudwalrus.com
+  remote_user: ogren
+  gather_facts: true
+  vars:
+    # Set this to the absolute path of your existing git repository
+    org: "loudwalrus"
+    cv_name: "rhel9_imagemode"
+    
+    # Image details
+    image_name: "satellite.loudwalrus.com/loudwalrus/rhel9_imagemode_demo/isdemo"
+    image_tag: "1.1"
+
+  tasks:
+    - name: Publish a new version of a Content View
+      redhat.satellite.content_view_version:
+        server_url: "http://satellite.loudwalrus.com"
+        username: "{{ satellite_user }}" # Credentials from 'Red Hat Satellite' credential type
+        password: "{{ satellite_password }}"
+        validate_certs: false
+        organization: "{{ org }}"
+        content_view: "{{ cv_name }}"
+        description: "Published via Ansible Automation"
+        state: present

@@ -1,0 +1,22 @@
+- name: Promote rhel9_imagemode content view to Test lifecycle environment
+  hosts: satellite.loudwalrus.com
+  remote_user: ogren
+  gather_facts: false
+  
+  # Replace these variables with your actual Satellite environment details
+  # or pass them at runtime using --extra-vars or Ansible Vault
+  vars:
+    org: "loudwalrus"
+
+  tasks:
+    - name: Promote latest version of rhel9_imagemode to Test
+      redhat.satellite.content_view_version:
+        server_url: "http://satellite.loudwalrus.com"
+        username: "{{ satellite_user }}" # # Credentials from 'Red Hat Satellite' credential type
+        password: "{{ satellite_password }}"
+        validate_certs: false
+        organization: "{{ org }}"
+        content_view: "rhel9_imagemode"
+        # By omitting the 'version' parameter, the module defaults to the latest version
+        lifecycle_environments:
+          - test

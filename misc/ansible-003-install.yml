@@ -1,0 +1,48 @@
+---
+- name: Ansible Install
+  hosts: ansible27.loudwalrus.com
+  vars:
+    ansible_connection: ssh # ansible-core won't handle local properly
+    aap_version: "2.7-4"
+    ansible_installer_dir: "/mnt/sync/ansible"
+  become: true
+  run_once: true
+  gather_facts: true
+
+  tasks:
+
+    - name: Copy and extract AAP installer
+      ansible.builtin.unarchive:
+        src: "{{ ansible_installer_dir }}/ansible-automation-platform-containerized-setup-{{ aap_version }}.tar.gz"
+        creates: "/home/ansible/ansible-automation-platform-containerized-setup-{{ aap_version }}"
+        remote_src: true
+        dest: /home/ansible
+        owner: ansible
+        group: ansible
+        mode: '0744'
+    - name: Copy inventory file # TODO: template this a bit
+      ansible.builtin.copy:
+        src: /mnt/sync/ansible/ansible27/inventory-growth-custom
+        remote_src: true
+        dest: "/home/ansible/ansible-automation-platform-containerized-setup-{{ aap_version }}/inventory"
+        owner: ansible
+        group: ansible
+        mode: '0644'
+        backup: true
+
+# TODO: Unsure if I need to do this step :
+#  https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/containerized_installation/advanced-configuration-containerized#proc-add-eda-safe-plugin-var
+# TODO: Perhaps I should set up the postgres externally, but not yet
+# TODO: Also, I should setup certs someday
+
+    - name: Run containerized install
+      ansible.builtin.command:
+        chdir: "/home/ansible/ansible-automation-platform-containerized-setup-{{ aap_version }}"
+        argv:
+          - ansible-playbook
+          - -i
+          - inventory
+          - ansible.containerized_installer.install
+      become: true # TODO: is this needed?
+      become_user: ansible
+      changed_when: true

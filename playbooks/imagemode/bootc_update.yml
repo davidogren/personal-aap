@@ -1,0 +1,30 @@
+---
+- name: Update image mode hosts in test lifecycle
+  hosts: imagemode_test_hosts
+  remote_user: ogren
+  tasks:
+
+# Ansible module doesn't yet support soft reboot, so I will use raw command 
+#    - name: Stage new image
+#      community.general.bootc_manage:
+#        state: latest
+
+   ## Log the bootc status before the update
+   - name: Get bootc Status
+     ansible.builtin.command:
+       cmd: "bootc status"
+     register: bootc_status
+     become: true
+     changed_when: false
+   - name: Log output
+     ansible.builtin.debug:
+       var: bootc_status
+   - name: Update bootc image and reboot
+     ansible.builtin.command:
+       cmd: "bootc update --apply"
+     register: bootc_apply
+     become: true
+     changed_when: "'No changes in' not in bootc_apply.stdout"
+   - name: Log update output
+     ansible.builtin.debug:
+       var: bootc_apply

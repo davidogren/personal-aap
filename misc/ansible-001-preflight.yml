@@ -1,7 +1,10 @@
-# Intent is to put things in this playbook that really are "one time", even if there
-# are problems with the installation. Mostly just checking prerequisites, but we are 
-# also going to do some basic RHEL config that never needs to be rerun (unlike content
-# updates that we'd want to repeat)
+# Intent is to put things in this playbook that should/must be run before authentication
+# is properly setup.
+#
+# While everything is idempotent here, nothing here should require being re-run, even
+# if there are problems with the installation. Effectively this is a continuation of
+# bootstrapping. We check prerequisites and do some basic RHEL config.
+#
 
 - name: Ansible Preflight Checks
   hosts: localhost # We don't have DNS yet
@@ -24,9 +27,6 @@
     - name: Check for a minimum of 4 CPU
       ansible.builtin.fail:
       when: ansible_processor_vcpus < 4
-    - name: Write debug
-      ansible.builtin.debug:
-        var: ansible_memtotal_mb
     - name: Debug memory
       ansible.builtin.debug:
         var: ansible_memtotal_mb
@@ -71,10 +71,11 @@
         owner: "{{ item }}"
         group: "{{ item }}"
         mode: '0700'
-    
+      loop: "{{ target_users }}"        
+  
     - name: Copy authorized_keys
       ansible.builtin.copy:
-        src: "{{ src_dir }}/authorized_keys"
+        src: "{{ key_src_dir }}/authorized_keys"
         dest: "/home/{{ item }}/.ssh"
         owner: "{{ item }}"
         group: "{{ item }}"
@@ -85,8 +86,8 @@
 #   Note that since these are still going to be CLI playbooks we can't use templates
     - name: Copy config
       ansible.builtin.copy:
-        src: "{{ src_dir }}/config"
-        dest: "/home/{{ item.0 }}/.ssh"
+        src: "{{ key_src_dir }}/config"
+        dest: "/home/{{ item }}/.ssh"
         owner: "{{ item }}"
         group: "{{ item }}"
         mode: '0600'
@@ -94,8 +95,8 @@
 
     - name: Copy secret key
       ansible.builtin.copy:
-        src: "{{ src_dir }}/id_ogren_homelab"
-        dest: "/home/{{ item.0 }}/.ssh"
+        src: "{{ key_src_dir }}/id_ogren_homelab"
+        dest: "/home/{{ item }}/.ssh"
         owner: "{{ item }}"
         group: "{{ item }}"
         mode: '0600'

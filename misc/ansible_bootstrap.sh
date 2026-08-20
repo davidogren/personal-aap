@@ -21,4 +21,6 @@ git config --global user.email "dogren@fastmail.fm"
 #Commenting until I can make this idempotent
 #git clone git@github.com:davidogren/personal-aap.git
 mount -t cifs -o username=ogren,vers=2.0 //192.168.0.98/sync /mnt/sync
-#Leaving one manual step here, making sure 
+#Leaving one manual step here, add ogren user to sudo as passwordless,
+# make sure to add any NOPASSWD after the wheel ALL or it might get overridden
+#  (or whoever we are using to run these)
